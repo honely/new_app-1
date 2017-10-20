@@ -10,10 +10,95 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-10-16 17:45:59
+Date: 2017-10-20 17:44:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for e_article
+-- ----------------------------
+DROP TABLE IF EXISTS `e_article`;
+CREATE TABLE `e_article` (
+  `article_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `article_title` varchar(255) NOT NULL COMMENT '文章标题',
+  `nav_id` int(11) NOT NULL COMMENT '分类id',
+  `uid` int(11) NOT NULL COMMENT '会员id',
+  `is_share` tinyint(1) NOT NULL COMMENT '是否被分享',
+  `is_like` tinyint(1) NOT NULL COMMENT '是否被点赞',
+  `see_num` int(11) NOT NULL COMMENT '浏览次数',
+  `add_time` int(10) NOT NULL COMMENT '添加时间',
+  `status` tinyint(1) NOT NULL COMMENT '状态',
+  PRIMARY KEY (`article_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='作品表';
+
+-- ----------------------------
+-- Table structure for e_article_info
+-- ----------------------------
+DROP TABLE IF EXISTS `e_article_info`;
+CREATE TABLE `e_article_info` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `article_id` int(11) NOT NULL COMMENT '作品id',
+  `content` varchar(255) NOT NULL COMMENT '作品内容',
+  `img_url` varchar(255) NOT NULL COMMENT '作品图片',
+  `music_url` varchar(255) NOT NULL COMMENT '音乐地址',
+  `video_url` varchar(255) NOT NULL COMMENT '视频地址',
+  PRIMARY KEY (`id`),
+  KEY `article` (`article_id`) USING BTREE
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='作品详情表';
+
+-- ----------------------------
+-- Table structure for e_collection
+-- ----------------------------
+DROP TABLE IF EXISTS `e_collection`;
+CREATE TABLE `e_collection` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `article_id` int(11) NOT NULL COMMENT '文章id',
+  `uid` int(11) NOT NULL COMMENT '收藏该文章的会员uid',
+  `coll_time` int(10) NOT NULL COMMENT '收藏时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章收藏表';
+
+-- ----------------------------
+-- Table structure for e_comment
+-- ----------------------------
+DROP TABLE IF EXISTS `e_comment`;
+CREATE TABLE `e_comment` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `article_id` int(11) NOT NULL COMMENT '作品id',
+  `uid` int(11) NOT NULL COMMENT '评论会员uid',
+  `comment_text` varchar(255) NOT NULL COMMENT '评论内容',
+  `be_comment_id` int(11) NOT NULL COMMENT '被评论的评论id',
+  `be_commont_uid` int(11) NOT NULL COMMENT '被评论会员uid',
+  `is_be_reply` tinyint(1) NOT NULL COMMENT '是否被评论',
+  `add_time` int(10) NOT NULL COMMENT '评论时间',
+  `status` tinyint(1) NOT NULL COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章评论表';
+
+-- ----------------------------
+-- Table structure for e_follow
+-- ----------------------------
+DROP TABLE IF EXISTS `e_follow`;
+CREATE TABLE `e_follow` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL COMMENT '会员uid',
+  `be_uid` int(11) NOT NULL COMMENT '被关注的会员uid',
+  `foll_time` int(10) NOT NULL COMMENT '关注时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='会员关注表';
+
+-- ----------------------------
+-- Table structure for e_like
+-- ----------------------------
+DROP TABLE IF EXISTS `e_like`;
+CREATE TABLE `e_like` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `article_id` int(11) NOT NULL COMMENT '文章id',
+  `uid` int(11) NOT NULL COMMENT '点赞会员uid',
+  `like_time` int(10) NOT NULL COMMENT '点赞时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章点赞表';
 
 -- ----------------------------
 -- Table structure for e_micro_blog
@@ -29,7 +114,34 @@ CREATE TABLE `e_micro_blog` (
   `add_time` int(10) NOT NULL COMMENT '添加时间',
   `status` tinyint(1) NOT NULL COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='微博会员表';
+
+-- ----------------------------
+-- Table structure for e_nav_banner
+-- ----------------------------
+DROP TABLE IF EXISTS `e_nav_banner`;
+CREATE TABLE `e_nav_banner` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `nav_id` int(11) NOT NULL COMMENT '分类导航id',
+  `banner_img` varchar(255) NOT NULL COMMENT 'banner图片地址',
+  `Jump_url` varchar(255) NOT NULL COMMENT '跳转地址',
+  `add_time` int(10) NOT NULL COMMENT '添加时间',
+  `status` tinyint(1) NOT NULL COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='分类导航banner表';
+
+-- ----------------------------
+-- Table structure for e_nav_list
+-- ----------------------------
+DROP TABLE IF EXISTS `e_nav_list`;
+CREATE TABLE `e_nav_list` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `nav_id` int(11) NOT NULL COMMENT '分类id',
+  `nav_name` varchar(255) NOT NULL COMMENT '分类名称',
+  `add_time` int(10) NOT NULL COMMENT '添加时间',
+  `status` tinyint(1) NOT NULL COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='分类导航表';
 
 -- ----------------------------
 -- Table structure for e_qq
@@ -45,7 +157,19 @@ CREATE TABLE `e_qq` (
   `add_time` int(10) NOT NULL COMMENT '添加时间',
   `status` tinyint(1) NOT NULL COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='qq会员表';
+
+-- ----------------------------
+-- Table structure for e_share
+-- ----------------------------
+DROP TABLE IF EXISTS `e_share`;
+CREATE TABLE `e_share` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `article_id` int(11) NOT NULL COMMENT '文章id',
+  `uid` int(11) NOT NULL COMMENT '分享会员uid',
+  `share_time` int(10) NOT NULL COMMENT '分享时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章分享表';
 
 -- ----------------------------
 -- Table structure for e_user
@@ -60,6 +184,7 @@ CREATE TABLE `e_user` (
   `salt_str` char(6) NOT NULL COMMENT '随机字符',
   `register_ip` varchar(255) NOT NULL COMMENT '注册ip',
   `integral` int(11) NOT NULL COMMENT '积分',
+  `is_follow` tinyint(1) NOT NULL COMMENT '是否被关注',
   `add_time` int(10) NOT NULL COMMENT '注册时间',
   `status` tinyint(1) NOT NULL COMMENT '状态',
   PRIMARY KEY (`uid`)
@@ -79,4 +204,4 @@ CREATE TABLE `e_wechat` (
   `add_time` int(10) NOT NULL COMMENT '添加时间',
   `status` tinyint(1) NOT NULL COMMENT '状态',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='微信会员表';
