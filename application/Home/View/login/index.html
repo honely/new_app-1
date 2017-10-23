@@ -1,0 +1,54 @@
+<html><head>
+    <title>后台管理登陆</title>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <link rel="stylesheet" href="/static/css/layui.css">
+    <style type="text/css">
+        body{background-color:#f5f5f5;}
+        .login-head{position:fixed;left:0;top:0;width:80%;height:60px;line-height:60px;background:#000;padding:0 10%;}
+        .login-head h1{color:#fff;font-size:20px;font-weight:600}
+        .login-box{margin:240px auto 0;width:400px;background-color:#fff;padding:15px 30px;border-radius:10px;box-shadow: 5px 5px 15px #999;}
+        .login-box .layui-input{font-size:15px;font-weight:400}
+        .login-box input[name="password"]{letter-spacing:5px;font-weight:800}
+        .login-box .layui-btn{width:100%;}
+        .login-box .copyright{text-align:center;height:50px;line-height:50px;font-size:12px;color:#ccc}
+        .login-box .copyright a{color:#ccc;}
+    </style>
+    <link id="layuicss-layer" rel="stylesheet" href="http://demo.hisiphp.com/static/admin/js/layui/css/modules/layer/default/layer.css?v=3.1.0" media="all"></head>
+<body>
+<div class="login-head">
+    <h1>HisiPHP</h1>
+</div>
+<div class="login-box">
+    <form action="/admin.php/admin/publics/index.html" method="post" class="layui-form layui-form-pane">
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>管理后台登陆</legend>
+        </fieldset>
+        <div class="layui-form-item">
+            <label class="layui-form-label">登陆账号</label>
+            <div class="layui-input-block">
+                <input type="text" name="username" class="layui-input" lay-verify="required" placeholder="请输入登陆账号" autofocus="autofocus" value="admin">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">登陆密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="password" class="layui-input" lay-verify="required" placeholder="******" value="123456">
+            </div>
+        </div>
+        <!--         <div class="layui-form-item">
+                    <label class="layui-form-label">安全验证</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="code" class="layui-input">
+                    </div>
+                </div> -->
+        <input type="hidden" name="__token__" value="f692d4e0ff4abfc436d6c3113d587ad1258d0d2b">        <input type="submit" value="登陆" lay-submit="" lay-filter="formSubmit" class="layui-btn">
+    </form>
+    <div class="copyright">
+        © 2017-2018 <a href="http://www.hisiphp.com?v=thinkphp5" target="_blank">HisiPHP.COM</a> All Rights Reserved.
+    </div>
+</div>
+<script src="/static/javascript/layui.js"></script>
+<div style="width:0;height:0;overflow:hidden"><script language="javascript" type="text/javascript" src="//js.users.51.la/19270907.js"></script><a href="https://www.51.la/?19270907" target="_blank" title="51.La 网站流量统计系统">网站统计</a>
+</div>
+
+</body></html>

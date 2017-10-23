@@ -105,3 +105,51 @@ function upload_img($name,$maxsize,$route,$type = 0){
 }
 
 
+/**
+ * 权限匹配
+ */
+function _mate_power($power_str){
+    if(!login_over_time()){
+        return false;
+    }
+    $session_data = \think\Cache::get('admin_data')['power'];
+    if(in_array($power_str,$session_data)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+
+/**
+ * 读取权限文件
+ */
+function _add_power(){
+    $file_path = "power/power.txt";
+    if(file_exists($file_path)){
+        $str = file_get_contents($file_path);
+        $array = explode("#", $str);
+        for($i = 0; $i < count($array); $i++)
+        {
+            if(!empty($array[$i])){
+                $arr[] = trim($array[$i],"");
+            }
+        }
+        return $arr;
+    }
+}
+
+
+/**
+ * 登录超时
+ */
+function login_over_time(){
+    $session_data = \think\Cache::get('admin_data');
+    if($session_data){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+
