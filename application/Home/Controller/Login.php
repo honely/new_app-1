@@ -18,6 +18,9 @@ class Login extends Controller
      * 管理员登录
      */
     public function Index(){
+        if(Cache::get("admin_data")){
+            $this->redirect('home/index/index');
+        }
         $param = Request::instance()->post();
         if(Request::instance()->isPost()){
             $user_name = $param['user_name'];

@@ -1,0 +1,78 @@
+{include file="common/header" /}
+<style>
+    .laytable-cell-1-sign{ width:150px;padding: 0 }
+    .pagination{height: 26px;position: relative;display: inline-block;}
+    .pagination > li{
+        height: 26px;
+        line-height: 26px;
+        border: none;
+        background: 0 0;
+        padding: 0 12px;
+        float: left;
+        font-size: 20px;
+    }
+</style>
+<table class="layui-table">
+    <colgroup>
+        <col width="10">
+        <col width="50">
+        <col width="100">
+        <col width="150">
+        <col width="150">
+        <col width="100">
+        <col width="200">
+        <col width="200">
+        <col>
+    </colgroup>
+    <thead>
+    <tr>
+        <th>
+            <input type="checkbox">
+        </th>
+        <th>ID</th>
+        <th>标题</th>
+        <th>内容</th>
+        <th>图片</th>
+        <th>添加会员</th>
+        <th>分类</th>
+        <th>浏览次数</th>
+        <th>添加时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {volist name="data" id="vo"}
+    <tr>
+        <td>
+            <input type="checkbox">
+        </td>
+        <td>{$vo.article_id}</td>
+        <td>{$vo.article_title}</td>
+        <td>
+            <div class="layui-table-cell laytable-cell-1-sign">
+                {$vo.content}
+            </div>
+        </td>
+        <td>{$vo.img_url}</td>
+        <td>{$vo.uid}</td>
+        <td>{$vo.nav_id}</td>
+        <td>{$vo.see_num}</td>
+        <td>{$vo.add_time|date="y-m-d h:i:s",###}</td>
+        <td>
+            <div class="layui-table-cell laytable-cell-1-10">
+                <a class="layui-btn layui-btn-primary layui-btn-mini" lay-event="detail">查看</a>
+                <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
+            </div>
+        </td>
+    </tr>
+    {/volist}
+    </tbody>
+</table>
+<div>
+    {$page}
+</div>
+<script>
+    $(".pagination .active").css('color','red');
+</script>
+{include file="common/footer" /}

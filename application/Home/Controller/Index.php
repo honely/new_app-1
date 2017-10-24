@@ -14,7 +14,7 @@ class Index extends Controller
     public function index(){
         $power_str = "shouye";
         if(!login_over_time()){
-            return json(['code' => 0,'msg' => '账号在线超时！']);
+            $this->redirect('index.php/home/login');
         }
         if(!_mate_power($power_str)){
             return json(['code' => -1,'msg' => '你没有权限查看该功能！']);

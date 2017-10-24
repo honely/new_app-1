@@ -1,0 +1,127 @@
+{include file="common/header" /}
+
+
+<form class="layui-form layui-form-pane1" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">作品ID</label>
+        <div class="layui-input-inline">
+            <input type="text" name="title" lay-verify="required|title" required autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-inline">
+            <input type="tel" name="phone" lay-verify="number" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">内容</label>
+        <div class="layui-input-block">
+            <input type="email" name="email" lay-verify="email" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">会员名称</label>
+        <div class="layui-input-inline">
+            <input type="password" name="password" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">搜索选择框</label>
+        <div class="layui-input-inline">
+            <select name="interest" lay-filter="aihao" lay-search>
+                <option value=""></option>
+                <option value="0">写作</option>
+                <option value="1">阅读</option>
+                <option value="2">游戏</option>
+                <option value="3">音乐</option>
+                <option value="4">旅行</option>
+                <option value="5">读书</option>
+            </select>
+        </div>
+    </div>
+
+
+
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">作品内容</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="*">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+
+<script>
+
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //自定义验证规则
+        form.verify({
+            title: function(value){
+                if(value.length < 5){
+                    return '标题也太短了吧';
+                }
+            }
+            ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+        });
+
+
+        //事件监听
+        form.on('select', function(data){
+            console.log(this);
+        });
+
+        form.on('select(aihao)', function(data){
+            console.log(data);
+        });
+
+        form.on('checkbox', function(data){
+            console.log(this.checked, data.elem.checked);
+        });
+
+        form.on('switch', function(data){
+            console.log(data);
+        });
+
+        form.on('radio', function(data){
+            console.log(data);
+        });
+
+        //监听提交
+        form.on('submit(*)', function(data){
+            console.log(data)
+            return false;
+        });
+
+    });
+
+</script>
+<script>
+
+    /**发送数据**/
+    function submit(obj) {
+        $.ajax({
+            'post':"post",
+            'url':"{:url('home/article/update_article')}",
+            'data':$("#article_form").serialize(),
+            'success':function (result) {
+                console.log(result);
+            },
+            'error':function () {
+                console.log('error');
+            }
+        })
+    }
+</script>
+
+
+{include file="common/footer" /}
