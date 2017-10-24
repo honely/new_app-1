@@ -11,5 +11,14 @@ use think\Controller;
 class Article extends Controller
 {
 
+    /**
+     * 作品列表
+     */
+    public function Index(){
+        $power_str = "zuopinliebiao";
+        if(!login_over_time()){
+
+        }
+    }
 
 }
