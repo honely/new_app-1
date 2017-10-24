@@ -13,26 +13,25 @@
         .login-box .copyright{text-align:center;height:50px;line-height:50px;font-size:12px;color:#ccc}
         .login-box .copyright a{color:#ccc;}
     </style>
-    <link id="layuicss-layer" rel="stylesheet" href="http://demo.hisiphp.com/static/admin/js/layui/css/modules/layer/default/layer.css?v=3.1.0" media="all"></head>
 <body>
 <div class="login-head">
     <h1>HisiPHP</h1>
 </div>
 <div class="login-box">
-    <form action="/admin.php/admin/publics/index.html" method="post" class="layui-form layui-form-pane">
+    <form action="" method="post" id="login_form" class="layui-form layui-form-pane">
         <fieldset class="layui-elem-field layui-field-title">
             <legend>管理后台登陆</legend>
         </fieldset>
         <div class="layui-form-item">
             <label class="layui-form-label">登陆账号</label>
             <div class="layui-input-block">
-                <input type="text" name="username" class="layui-input" lay-verify="required" placeholder="请输入登陆账号" autofocus="autofocus" value="admin">
+                <input type="text" name="user_name" class="layui-input" placeholder="请输入登陆账号" autofocus="autofocus" value="admin">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">登陆密码</label>
             <div class="layui-input-block">
-                <input type="password" name="password" class="layui-input" lay-verify="required" placeholder="******" value="123456">
+                <input type="password" name="pass_word" class="layui-input"  placeholder="******" value="123456">
             </div>
         </div>
         <!--         <div class="layui-form-item">
@@ -41,14 +40,36 @@
                         <input type="text" name="code" class="layui-input">
                     </div>
                 </div> -->
-        <input type="hidden" name="__token__" value="f692d4e0ff4abfc436d6c3113d587ad1258d0d2b">        <input type="submit" value="登陆" lay-submit="" lay-filter="formSubmit" class="layui-btn">
+        <span onclick="submit(this)" class="layui-btn">登陆</span>
     </form>
-    <div class="copyright">
-        © 2017-2018 <a href="http://www.hisiphp.com?v=thinkphp5" target="_blank">HisiPHP.COM</a> All Rights Reserved.
-    </div>
 </div>
 <script src="/static/javascript/layui.js"></script>
-<div style="width:0;height:0;overflow:hidden"><script language="javascript" type="text/javascript" src="//js.users.51.la/19270907.js"></script><a href="https://www.51.la/?19270907" target="_blank" title="51.La 网站流量统计系统">网站统计</a>
-</div>
+<script src="__JS__/jquery.min.js"></script>
+</body>
+</html>
+<script>
 
-</body></html>
+    /**发送登录数据**/
+    function submit(obj) {
+        $.ajax({
+            'type':'post',
+            'url':"{:url('home/login/index')}",
+            'dataType':'json',
+            'data':$("#login_form").serialize(),
+            'success':function (data) {
+                if(data.code > 0){
+                    alert(data.msg);
+                    location.href = "{:url('home/index/index')}";
+                }else {
+                    alert(data.msg);
+                    location.reload();
+                }
+
+            },
+            'error':function () {
+                console.log('error');
+            }
+
+        })
+    }
+</script>

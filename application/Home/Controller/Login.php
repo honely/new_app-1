@@ -19,7 +19,7 @@ class Login extends Controller
      */
     public function Index(){
         $param = Request::instance()->post();
-        if($param){
+        if(Request::instance()->isPost()){
             $user_name = $param['user_name'];
             $pass_word = $param['pass_word'];
             if(empty($user_name) || empty($pass_word)){
@@ -29,8 +29,9 @@ class Login extends Controller
             $get_user_info = $admin_model->login($user_name,$pass_word);
             Cache::set('admin_data',$get_user_info,3600);
             return $get_user_info ? json(['code' => 1,'msg' => '登录成功！']) : json(['code' => -1,'msg' => '登录失败！']);
+        }else{
+            return $this->fetch('index');
         }
-        return $this->fetch('index');
     }
 
 
@@ -38,15 +39,19 @@ class Login extends Controller
      * 添加管理员
      */
     public function Add_admin_user(){
+        $power_str = "tianjiaguanliyuan";
         if(!login_over_time()){
             return json(['code' => 0,'msg' => '账号在线超时！']);
+        }
+        if(!_mate_power($power_str)){
+            return json(['code' => -1,'msg' => '你没有权限进行该操作！']);
         }
         $admin_model = new Admin();
         $param = Request::instance()->post();
         $user_name = $param['user_name'];
         $pass_word = $param['pass_eord'];
         if(empty($user_name) || empty($pass_word)){
-            return json(['code' => -1,'msg' => '账号或密码不能为空！']);
+            return json(['code' => -3,'msg' => '账号或密码不能为空！']);
         }
         $add_user = $admin_model->add_user($user_name,$pass_word);
         return $add_user ? json(['code' => 1,'msg' => '添加成功！']) : json(['code' => -2,'msg' => '添加失败！']);
@@ -64,6 +69,8 @@ class Login extends Controller
         if(!_mate_power($power_str)){
             return json(['code' => -1,'msg' => '你没有权限进行该操作！']);
         }
+        $power_file = _add_power();
+
 
 
     }

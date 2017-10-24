@@ -10,10 +10,29 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-10-20 17:44:07
+Date: 2017-10-24 10:37:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for e_admin_user
+-- ----------------------------
+DROP TABLE IF EXISTS `e_admin_user`;
+CREATE TABLE `e_admin_user` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(255) NOT NULL COMMENT '管理员名称',
+  `pass_word` varchar(255) NOT NULL COMMENT '密码',
+  `power` varchar(255) NOT NULL COMMENT '权限',
+  `add_time` int(10) NOT NULL COMMENT '添加时间',
+  `status` tinyint(1) NOT NULL COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='后台管理员';
+
+-- ----------------------------
+-- Records of e_admin_user
+-- ----------------------------
+INSERT INTO `e_admin_user` VALUES ('1', 'admin', '14e1b600b1fd579f47433b88e8d85291', 'shouye,', '0', '1');
 
 -- ----------------------------
 -- Table structure for e_article
@@ -33,6 +52,10 @@ CREATE TABLE `e_article` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='作品表';
 
 -- ----------------------------
+-- Records of e_article
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for e_article_info
 -- ----------------------------
 DROP TABLE IF EXISTS `e_article_info`;
@@ -48,6 +71,10 @@ CREATE TABLE `e_article_info` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='作品详情表';
 
 -- ----------------------------
+-- Records of e_article_info
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for e_collection
 -- ----------------------------
 DROP TABLE IF EXISTS `e_collection`;
@@ -58,6 +85,10 @@ CREATE TABLE `e_collection` (
   `coll_time` int(10) NOT NULL COMMENT '收藏时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章收藏表';
+
+-- ----------------------------
+-- Records of e_collection
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for e_comment
@@ -77,6 +108,10 @@ CREATE TABLE `e_comment` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章评论表';
 
 -- ----------------------------
+-- Records of e_comment
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for e_follow
 -- ----------------------------
 DROP TABLE IF EXISTS `e_follow`;
@@ -89,6 +124,10 @@ CREATE TABLE `e_follow` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='会员关注表';
 
 -- ----------------------------
+-- Records of e_follow
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for e_like
 -- ----------------------------
 DROP TABLE IF EXISTS `e_like`;
@@ -99,6 +138,10 @@ CREATE TABLE `e_like` (
   `like_time` int(10) NOT NULL COMMENT '点赞时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章点赞表';
+
+-- ----------------------------
+-- Records of e_like
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for e_micro_blog
@@ -117,6 +160,10 @@ CREATE TABLE `e_micro_blog` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='微博会员表';
 
 -- ----------------------------
+-- Records of e_micro_blog
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for e_nav_banner
 -- ----------------------------
 DROP TABLE IF EXISTS `e_nav_banner`;
@@ -131,6 +178,10 @@ CREATE TABLE `e_nav_banner` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='分类导航banner表';
 
 -- ----------------------------
+-- Records of e_nav_banner
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for e_nav_list
 -- ----------------------------
 DROP TABLE IF EXISTS `e_nav_list`;
@@ -142,6 +193,10 @@ CREATE TABLE `e_nav_list` (
   `status` tinyint(1) NOT NULL COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='分类导航表';
+
+-- ----------------------------
+-- Records of e_nav_list
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for e_qq
@@ -160,6 +215,10 @@ CREATE TABLE `e_qq` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='qq会员表';
 
 -- ----------------------------
+-- Records of e_qq
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for e_share
 -- ----------------------------
 DROP TABLE IF EXISTS `e_share`;
@@ -170,6 +229,10 @@ CREATE TABLE `e_share` (
   `share_time` int(10) NOT NULL COMMENT '分享时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章分享表';
+
+-- ----------------------------
+-- Records of e_share
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for e_user
@@ -191,6 +254,10 @@ CREATE TABLE `e_user` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='会员基本信息表';
 
 -- ----------------------------
+-- Records of e_user
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for e_wechat
 -- ----------------------------
 DROP TABLE IF EXISTS `e_wechat`;
@@ -205,3 +272,7 @@ CREATE TABLE `e_wechat` (
   `status` tinyint(1) NOT NULL COMMENT '状态',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='微信会员表';
+
+-- ----------------------------
+-- Records of e_wechat
+-- ----------------------------
