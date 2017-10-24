@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-10-24 10:37:44
+Date: 2017-10-24 17:43:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -32,7 +32,7 @@ CREATE TABLE `e_admin_user` (
 -- ----------------------------
 -- Records of e_admin_user
 -- ----------------------------
-INSERT INTO `e_admin_user` VALUES ('1', 'admin', '14e1b600b1fd579f47433b88e8d85291', 'shouye,', '0', '1');
+INSERT INTO `e_admin_user` VALUES ('1', 'admin', '14e1b600b1fd579f47433b88e8d85291', 'shouye,zuopinliebiao', '0', '1');
 
 -- ----------------------------
 -- Table structure for e_article
@@ -49,11 +49,13 @@ CREATE TABLE `e_article` (
   `add_time` int(10) NOT NULL COMMENT '添加时间',
   `status` tinyint(1) NOT NULL COMMENT '状态',
   PRIMARY KEY (`article_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='作品表';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='作品表';
 
 -- ----------------------------
 -- Records of e_article
 -- ----------------------------
+INSERT INTO `e_article` VALUES ('1', '测试', '1', '1', '0', '0', '0', '0', '1');
+INSERT INTO `e_article` VALUES ('2', '测试2', '1', '1', '0', '0', '0', '0', '1');
 
 -- ----------------------------
 -- Table structure for e_article_info
@@ -68,11 +70,13 @@ CREATE TABLE `e_article_info` (
   `video_url` varchar(255) NOT NULL COMMENT '视频地址',
   PRIMARY KEY (`id`),
   KEY `article` (`article_id`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='作品详情表';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='作品详情表';
 
 -- ----------------------------
 -- Records of e_article_info
 -- ----------------------------
+INSERT INTO `e_article_info` VALUES ('1', '1', '测试数据', '', '', '');
+INSERT INTO `e_article_info` VALUES ('2', '2', '测试数据2', '', '', '');
 
 -- ----------------------------
 -- Table structure for e_collection
@@ -186,12 +190,11 @@ CREATE TABLE `e_nav_banner` (
 -- ----------------------------
 DROP TABLE IF EXISTS `e_nav_list`;
 CREATE TABLE `e_nav_list` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `nav_id` int(11) NOT NULL COMMENT '分类id',
+  `nav_id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '分类id',
   `nav_name` varchar(255) NOT NULL COMMENT '分类名称',
   `add_time` int(10) NOT NULL COMMENT '添加时间',
   `status` tinyint(1) NOT NULL COMMENT '状态',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`nav_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='分类导航表';
 
 -- ----------------------------
