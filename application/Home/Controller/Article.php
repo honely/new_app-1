@@ -114,7 +114,7 @@ class Article extends Controller
         if($param){
             $article_model = new Articlem();
             $add_article = $article_model->add_new_article($param);
-            return $add_article ? json(['code' => 1,'msg' => '添加成功！']) : json(['code' => -1,'msg' => '添加失败！']);
+            return $add_article ? json(['code' => 1,'msg' => '添加成功！'])   : json(['code' => -1,'msg' => '添加失败！']);
         }
         return $this->fetch('add_article');
 

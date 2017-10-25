@@ -22,7 +22,7 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">发表会员</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="uid" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                            <input type="text" name="uid" autocomplete="off" value="1" placeholder="请输入标题" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline">
@@ -83,7 +83,7 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <button class="layui-btn" onclick="add_article()" lay-submit="" lay-filter="demo1">立即提交</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
                 </div>
             </form>
         </div>
@@ -116,7 +116,7 @@
         //自定义验证规则
         form.verify({
             title: function(value){
-                if(value.length < 5){
+                if(value.length < 4){
                     return '标题至少得5个字符啊';
                 }
             }
@@ -141,9 +141,7 @@
 
         //监听提交
         form.on('submit(demo1)', function(data){
-            layer.alert(JSON.stringify(data.field), {
-                title: '最终的提交信息'
-            });
+            add_article();
             return false;
         });
 
