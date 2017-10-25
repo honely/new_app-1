@@ -44,7 +44,7 @@
                     <dd><a href="">安全设置</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退了</a></li>
+            <li class="layui-nav-item"><a href="{:url('home/login/login_out')}">退了</a></li>
         </ul>
     </div>
 
@@ -55,8 +55,8 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">作品管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="{:url('home/article/index')}">作品列表</a></dd>
-                        <dd><a href="javascript:;">添加作品</a></dd>
+                        <dd><a href="{:url('home/article/index')}" data-href="">作品列表</a></dd>
+                        <dd><a href="{:url('home/article/add_new_article')}">添加作品</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -82,4 +82,4 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;">
+        <fieldset class="layui-elem-field layui-field-title" style="margin: 30px 10px; border: 1px solid #e2e2e2;box-sizing: content-box;">

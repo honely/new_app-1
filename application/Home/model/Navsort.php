@@ -8,13 +8,13 @@
 namespace app\Home\model;
 use think\Model;
 
-class Nav extends Model
+class Navsort extends Model
 {
 
     /**
      * table
      */
-    protected $table = 'nav_list';
+    protected $table = 'e_nav_list';
 
 
     /**

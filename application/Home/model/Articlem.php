@@ -25,6 +25,7 @@ class Articlem extends Model
      */
     public function get_article_list_info($options){
         $data = Db::table('e_article')->alias('ar')
+                ->field('ar.*,ai.*,na.nav_name,us.user_name')
                 ->join('e_article_info ai','ar.article_id = ai.article_id')
                 ->join('e_user as us','us.uid = ar.uid')
                 ->join('e_nav_list as na','ar.nav_id = na.nav_id')
@@ -36,13 +37,13 @@ class Articlem extends Model
 
     /**
      * 删除article
-     * @param $article_id 作品id
+     * @param $article_id 作品id $status 作品状态
      * @return true or false;
      */
-    public function del_article($article_id){
+    public function del_article($article_id,$status){
         $res = Db::table('e_article')->where(['article_id' => $article_id])
                ->update([
-                   'status' => 3
+                   'status' => $status
                ]);
         return $res ? true :false;
     }
@@ -71,6 +72,32 @@ class Articlem extends Model
      */
     public function Update_article($data){
 
+    }
+
+
+    /**
+     * 添加新作品
+     * @param $data 作品数据
+     * @return true or false;
+     */
+    public function add_new_article($data){
+        $insert_data = [
+            'article_title' => $data['title'],
+            'nav_id' => $data['nav_sort'],
+            'add_time' => time(),
+            'status' => 1
+        ];
+        $res = Db::table('e_article')->insertGetId($insert_data);
+        if($res){
+            $insert_info_data = [
+                'article_id' => $res,
+                'content' => $data['content'],
+                'img_url' => $data['img_url']
+            ];
+            $res_info = Db::table('e_article_info')->insert($insert_info_data);
+            return $res_info ? true : false;
+        }
+        return false;
     }
 
 

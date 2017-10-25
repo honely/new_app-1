@@ -39,6 +39,17 @@ class Login extends Controller
 
 
     /**
+     * 退出
+     */
+    public function Login_out(){
+        Cache::set('admin_data',null);
+        if(Cache::get('admin_data') == null){
+            $this->redirect('home/login/index');
+        }
+    }
+
+
+    /**
      * 添加管理员
      */
     public function Add_admin_user(){
