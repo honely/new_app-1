@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-10-24 17:43:39
+Date: 2017-10-26 16:42:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -49,13 +49,14 @@ CREATE TABLE `e_article` (
   `add_time` int(10) NOT NULL COMMENT '添加时间',
   `status` tinyint(1) NOT NULL COMMENT '状态',
   PRIMARY KEY (`article_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='作品表';
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='作品表';
 
 -- ----------------------------
 -- Records of e_article
 -- ----------------------------
 INSERT INTO `e_article` VALUES ('1', '测试', '1', '1', '0', '0', '0', '0', '1');
-INSERT INTO `e_article` VALUES ('2', '测试2', '1', '1', '0', '0', '0', '0', '1');
+INSERT INTO `e_article` VALUES ('5', '上传测试1', '1', '1', '0', '0', '0', '1508920150', '3');
+INSERT INTO `e_article` VALUES ('6', '测试标题2', '1', '1', '0', '0', '0', '1508989651', '3');
 
 -- ----------------------------
 -- Table structure for e_article_info
@@ -70,13 +71,14 @@ CREATE TABLE `e_article_info` (
   `video_url` varchar(255) NOT NULL COMMENT '视频地址',
   PRIMARY KEY (`id`),
   KEY `article` (`article_id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='作品详情表';
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='作品详情表';
 
 -- ----------------------------
 -- Records of e_article_info
 -- ----------------------------
 INSERT INTO `e_article_info` VALUES ('1', '1', '测试数据', '', '', '');
-INSERT INTO `e_article_info` VALUES ('2', '2', '测试数据2', '', '', '');
+INSERT INTO `e_article_info` VALUES ('5', '5', '测试内容', '', '', '');
+INSERT INTO `e_article_info` VALUES ('6', '6', '<p style=\"text-align: center;\">这是一个测试数据</p>', '', '', '');
 
 -- ----------------------------
 -- Table structure for e_collection
@@ -113,6 +115,24 @@ CREATE TABLE `e_comment` (
 
 -- ----------------------------
 -- Records of e_comment
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for e_coupon
+-- ----------------------------
+DROP TABLE IF EXISTS `e_coupon`;
+CREATE TABLE `e_coupon` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `coupon_name` varchar(255) NOT NULL COMMENT '礼券名称',
+  `quota` int(11) NOT NULL COMMENT '礼券金额',
+  `use_rule` int(11) NOT NULL COMMENT '礼券规则',
+  `add_time` int(10) NOT NULL,
+  `status` tinyint(1) NOT NULL COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='礼券表';
+
+-- ----------------------------
+-- Records of e_coupon
 -- ----------------------------
 
 -- ----------------------------
@@ -195,11 +215,12 @@ CREATE TABLE `e_nav_list` (
   `add_time` int(10) NOT NULL COMMENT '添加时间',
   `status` tinyint(1) NOT NULL COMMENT '状态',
   PRIMARY KEY (`nav_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='分类导航表';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='分类导航表';
 
 -- ----------------------------
 -- Records of e_nav_list
 -- ----------------------------
+INSERT INTO `e_nav_list` VALUES ('1', '测试分类', '0', '1');
 
 -- ----------------------------
 -- Table structure for e_qq
@@ -251,13 +272,33 @@ CREATE TABLE `e_user` (
   `register_ip` varchar(255) NOT NULL COMMENT '注册ip',
   `integral` int(11) NOT NULL COMMENT '积分',
   `is_follow` tinyint(1) NOT NULL COMMENT '是否被关注',
+  `is_plat` tinyint(1) unsigned zerofill NOT NULL COMMENT '是否平台注册',
   `add_time` int(10) NOT NULL COMMENT '注册时间',
-  `status` tinyint(1) NOT NULL COMMENT '状态',
+  `status` tinyint(1) NOT NULL COMMENT '状态(1正常，2禁言，3删除，4禁止使用)',
   PRIMARY KEY (`uid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='会员基本信息表';
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='会员基本信息表';
 
 -- ----------------------------
 -- Records of e_user
+-- ----------------------------
+INSERT INTO `e_user` VALUES ('1', 'admin', '123456', '', '', '', '', '0', '0', '0', '0', '0');
+
+-- ----------------------------
+-- Table structure for e_user_coupon
+-- ----------------------------
+DROP TABLE IF EXISTS `e_user_coupon`;
+CREATE TABLE `e_user_coupon` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL COMMENT '会员uid',
+  `coupon_id` int(11) NOT NULL COMMENT '礼券类型',
+  `add_time` int(10) NOT NULL COMMENT '添加时间',
+  `overdue_time` int(10) NOT NULL COMMENT '过期时间',
+  `status` tinyint(1) NOT NULL COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='会员礼券表';
+
+-- ----------------------------
+-- Records of e_user_coupon
 -- ----------------------------
 
 -- ----------------------------
