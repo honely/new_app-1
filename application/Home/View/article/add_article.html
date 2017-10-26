@@ -22,7 +22,12 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">发表会员</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="uid" autocomplete="off" value="1" placeholder="请输入标题" class="layui-input">
+                            <select name="uid" lay-verify="user_name">
+                                <option value="0" selected="">请选择会员</option>
+                                {volist name="user_data" id="item"}
+                                <option value="{$item.uid}">{$item.user_name}</option>
+                                {/volist}
+                            </select>
                         </div>
                     </div>
                     <div class="layui-inline">

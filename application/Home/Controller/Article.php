@@ -8,6 +8,7 @@
 namespace app\Home\controller;
 use app\Home\model\Articlem;
 use app\Home\model\Navsort;
+use app\home\model\Userp;
 use think\Controller;
 use think\Request;
 
@@ -108,8 +109,11 @@ class Article extends Controller
             $this->success('你没有权限进行此操作!','home/index/index');
         }
         $nav_model = new Navsort();
+        $user_model = new Userp();
+        $get_user_list = $user_model->get_plat_user();
         $get_nav_list = $nav_model->get_sort_nav_info();
         $this->assign('nav_data',$get_nav_list);
+        $this->assign('user_data',$get_user_list);
         $param = Request::instance()->post();
         if($param){
             $article_model = new Articlem();
