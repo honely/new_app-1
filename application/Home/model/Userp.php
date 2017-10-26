@@ -51,4 +51,39 @@ class Userp extends Model
     }
 
 
+    /**
+     * 获取会员列表
+     * @param $options  分页参数
+     * @return array or null;
+     */
+    public function get_user_list($options){
+        $data = Db::table('e_user')->paginate(15,false,$options);
+        $page = $data->render();
+        return ($data || $page) ? ['data' => $data,'page' => $page] : null;
+    }
+
+
+    /**
+     * 删除平台会员
+     * @param $uid 会员id
+     * @return true or false;
+     */
+    public function del_plat_user($uid){
+        $res = Db::table('e_user')->where(['uid' => $uid,'is_plat' => 1])->update(['status' => 3]);
+        return $res ? true : false;
+    }
+
+
+    /**
+     * 会员禁言状态
+     * @param $uid 会员id
+     * @return true or false;
+     */
+    public function update_user_status($uid){
+        $data = ['status' => 2];
+        $res = Db::table('e_user')->where(['uid' => $uid])->update($data);
+        return $res ? true : false;
+    }
+
+
 }
