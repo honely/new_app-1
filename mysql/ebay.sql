@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-10-26 16:42:44
+Date: 2017-10-27 10:44:07
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -79,6 +79,23 @@ CREATE TABLE `e_article_info` (
 INSERT INTO `e_article_info` VALUES ('1', '1', '测试数据', '', '', '');
 INSERT INTO `e_article_info` VALUES ('5', '5', '测试内容', '', '', '');
 INSERT INTO `e_article_info` VALUES ('6', '6', '<p style=\"text-align: center;\">这是一个测试数据</p>', '', '', '');
+
+-- ----------------------------
+-- Table structure for e_brand
+-- ----------------------------
+DROP TABLE IF EXISTS `e_brand`;
+CREATE TABLE `e_brand` (
+  `brand_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `brand_name` varchar(255) NOT NULL COMMENT '品牌名称',
+  `brand_logo` varchar(255) NOT NULL COMMENT '品牌logo',
+  `add_time` int(10) NOT NULL COMMENT '添加时间',
+  `status` tinyint(1) NOT NULL COMMENT '状态',
+  PRIMARY KEY (`brand_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='品牌表';
+
+-- ----------------------------
+-- Records of e_brand
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for e_collection
@@ -223,6 +240,59 @@ CREATE TABLE `e_nav_list` (
 INSERT INTO `e_nav_list` VALUES ('1', '测试分类', '0', '1');
 
 -- ----------------------------
+-- Table structure for e_product
+-- ----------------------------
+DROP TABLE IF EXISTS `e_product`;
+CREATE TABLE `e_product` (
+  `pro_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `product_name` varchar(255) NOT NULL COMMENT '商品名称',
+  `sort` int(11) NOT NULL COMMENT '商品分类',
+  `brand_id` int(11) NOT NULL COMMENT '品牌id',
+  `def_pro_img` varchar(255) NOT NULL COMMENT '商品图片',
+  `def_price` decimal(10,2) NOT NULL COMMENT '价格',
+  `descptions` varchar(255) NOT NULL COMMENT '商品描述',
+  `add_time` int(10) NOT NULL COMMENT '添加时间',
+  `status` tinyint(1) NOT NULL COMMENT '状态',
+  PRIMARY KEY (`pro_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='商品表';
+
+-- ----------------------------
+-- Records of e_product
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for e_product_attr_val
+-- ----------------------------
+DROP TABLE IF EXISTS `e_product_attr_val`;
+CREATE TABLE `e_product_attr_val` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL COMMENT '商品id',
+  `attr_id` int(11) NOT NULL COMMENT '属性id',
+  `attr_value` varchar(255) NOT NULL COMMENT '属性值',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='商品属性表';
+
+-- ----------------------------
+-- Records of e_product_attr_val
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for e_product_sort
+-- ----------------------------
+DROP TABLE IF EXISTS `e_product_sort`;
+CREATE TABLE `e_product_sort` (
+  `sort_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `sort_name` varchar(255) NOT NULL COMMENT '商品名称',
+  `parent_id` int(11) NOT NULL COMMENT '根据id判断二级分类',
+  `status` tinyint(1) NOT NULL COMMENT '状态',
+  PRIMARY KEY (`sort_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='商品分类表';
+
+-- ----------------------------
+-- Records of e_product_sort
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for e_qq
 -- ----------------------------
 DROP TABLE IF EXISTS `e_qq`;
@@ -256,6 +326,38 @@ CREATE TABLE `e_share` (
 
 -- ----------------------------
 -- Records of e_share
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for e_sort_attr
+-- ----------------------------
+DROP TABLE IF EXISTS `e_sort_attr`;
+CREATE TABLE `e_sort_attr` (
+  `attr_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `attr_name` varchar(255) NOT NULL COMMENT '属性名称',
+  `type_id` int(11) NOT NULL COMMENT '分类类型id',
+  `status` tinyint(1) NOT NULL,
+  PRIMARY KEY (`attr_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='类型属性表';
+
+-- ----------------------------
+-- Records of e_sort_attr
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for e_sort_type
+-- ----------------------------
+DROP TABLE IF EXISTS `e_sort_type`;
+CREATE TABLE `e_sort_type` (
+  `type_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type_name` varchar(255) NOT NULL COMMENT '属性名称',
+  `sort_id` int(11) NOT NULL COMMENT '商品类型id',
+  `status` tinyint(1) NOT NULL COMMENT '状态',
+  PRIMARY KEY (`type_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='分类类型表';
+
+-- ----------------------------
+-- Records of e_sort_type
 -- ----------------------------
 
 -- ----------------------------
