@@ -56,6 +56,7 @@ class Articlem extends Model
      */
     public function get_article_info($article_id){
         $data = Db::table('e_article')->alias('ar')
+                ->field('ar.*,ai.*,us.uid,us.user_name,na.nav_name')
                 ->join('e_article_info as ai','ar.article_id = ai.article_id')
                 ->join('e_user as us','us.uid = ar.uid')
                 ->join('e_nav_list as na','na.nav_id = ar.nav_id')
@@ -71,7 +72,19 @@ class Articlem extends Model
      * @return true or false;
      */
     public function Update_article($data){
-
+        $update_data = [
+            'article_title' => $data['title'],
+            'nav_id' => $data['nav_sort'],
+            'update_time' => time()
+        ];
+        $update_info = [
+            'content' => $data['content'],
+        ];
+        $res = Db::table('e_article')->where(['article_id' => $data['article_id']])
+               ->update($update_data);
+        $res_info = Db::table('e_article_info')->where(['article_id' => $data['article_id']])
+                    ->update($update_info);
+        return ($res && $res_info) ? true : false;
     }
 
 

@@ -73,8 +73,11 @@ class Article extends Controller
         }
         $article_id = input('article_id');
         $article_model = new Articlem();
+        $nav_model = new Navsort();
         $get_article_info = $article_model->get_article_info($article_id);
+        $get_nav_list = $nav_model->get_sort_nav_info();
         $this->assign('data',$get_article_info);
+        $this->assign('nav_data',$get_nav_list);
         return $this->fetch('details_article');
     }
 
@@ -86,6 +89,7 @@ class Article extends Controller
         $power_str = 'xiugaizuopin';
         if(!login_over_time()){
             $this->redirect('home/login/index');
+            return json(['code' => -2,'url' => 'home/login/index']);
         }
         if(!_mate_power($power_str)){
             $this->success('你没有权限进行此操作!','home/index/index');
@@ -93,6 +97,7 @@ class Article extends Controller
         $param = Request::instance()->post();
         $article_model = new Articlem();
         $update_article = $article_model->Update_article($param);
+        return $update_article ? json(['code' => 1,'msg' => '修改成功！']) : json(['code' => -1,'msg' => '修改失败！']);
 
     }
 

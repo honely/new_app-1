@@ -3,6 +3,7 @@
 <div style="padding: 0 10px">
 <style>
     .laytable-cell-1-sign{ width:150px;padding: 0 }
+    .laytable-cell-2-sign{width: 100px;padding: 0}
     .pagination{height: 26px;position: relative;display: inline-block;}
     .pagination > li{
         height: 26px;
@@ -24,8 +25,8 @@
         <col width="100">
         <col width="200">
         <col width="200">
-        <col width="100">
-        <col width="100">
+        <col width="150">
+        <col width="150">
         <col width="200">
         <col width="150">
         <col>
@@ -66,23 +67,31 @@
                 {$vo.content}
             </div>
         </td>
-        <td>{$vo.img_url ? $vo.img_url : '空'}</td>
         <td>
-            <div class="layui-table-cell laytable-cell-1-sign">
+            <div class="layui-table-cell laytable-cell-2-sign">
+                {$vo.img_url ? $vo.img_url : '空'}
+            </div>
+        </td>
+        <td>
+            <div class="layui-table-cell laytable-cell-2-sign">
                 {$vo.music_url ? $vo.music_url : '空'}
             </div>
         </td>
         <td>
-            <div class="layui-table-cell laytable-cell-1-sign">
+            <div class="layui-table-cell laytable-cell-2-sign">
                 {$vo.video_url ? $vo.video_url : '空'}
             </div>
         </td>
         <td>{$vo.user_name}</td>
         <td>{$vo.nav_name}</td>
         <td>{$vo.see_num}</td>
-        <td>{$vo.add_time|date="y-m-d h:i:s",###}</td>
         <td>
-            {$vo.status==1 ? '正常运行中' : '已删除'}
+            <div class="layui-table-cell laytable-cell-1-sign">
+                {$vo.add_time|date="y-m-d h:i:s",###}
+            </div>
+        </td>
+        <td>
+            {$vo.status==1 ? '正常' : '已删除'}
         </td>
         <td>
             <div class="layui-table-cell laytable-cell-1-10"><a href="{:url('home/article/article_details',['article_id' => $vo.article_id])}" class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
