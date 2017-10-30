@@ -7,6 +7,7 @@
  */
 namespace app\Home\controller;
 use app\Home\model\Userp;
+use think\Cache;
 use think\Controller;
 use think\Db;
 use think\Request;
@@ -70,7 +71,7 @@ class User extends Controller
 
     }
 
-    
+
 
     /**
      * 会员禁言 & 恢复禁言
@@ -89,6 +90,48 @@ class User extends Controller
         $gag_user = $user_model->update_user_status($uid,$status);
         return $gag_user ? json(['code' => 1,'msg' => '修改成功！']) : json(['code' => -1,'msg' => '修改失败！']);
 
+    }
+
+
+    /**
+     * 发送手机验证码
+     */
+    public function send_sms_code(){
+        header('Content-Type: text/plain; charset=utf-8');
+        $param = Request::instance()->post();
+        $mobile = $param['mobile'];
+        $accessKeyId = "LTAIz4qwld4JhGBD";
+        $accessKeySecret = "W5GI4y9px8VQrvzc2NiJaOn0E7bPAt";
+        $signName = "彭耀久";
+        $templateCode = "SMS_94605099";
+        $phoneNumbers = $mobile;
+        $send_class = new \SmsDemo($accessKeyId,$accessKeySecret);
+        $code = _rand_str(4);
+        Cache::set('mobile_code_plat',$code);
+        $send_code = $send_class->sendSms(
+            $signName,
+            $templateCode,
+            $phoneNumbers,
+            ['number' => $code]
+        );
+        $send_data = json_encode($send_code);
+        if($send_data->Code == 'ok'){
+            return json(['code' => 1,'msg' => '发送成功！']);
+        }else{
+            return json(['code' => -1,'msg' => $send_data->Message]);
+        }
+    }
+
+
+
+    /**
+     * 图片上传、视频、音频
+     */
+    public function Upload_file(){
+        $route = '../public/headImg/';
+        $host = "http://".$_SERVER['SERVER_NAME'];
+        $file_url = upload_img('file',400000,$route,0);
+        return json(['url_str' => $host.'/headImg/'.$file_url]);
     }
 
 

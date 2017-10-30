@@ -39,7 +39,7 @@ class Article extends Controller
             'path'=>url('index')
         ];
         $get_article_list = $article_model->get_article_list_info($options);
-        $this->assign('data', $get_article_list['data']);
+        $this->assign('art_data', $get_article_list['data']);
         $this->assign('page', $get_article_list['page']);
         return $this->fetch('index');
     }

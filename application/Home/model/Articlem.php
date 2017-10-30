@@ -29,7 +29,7 @@ class Articlem extends Model
                 ->join('e_article_info ai','ar.article_id = ai.article_id')
                 ->join('e_user as us','us.uid = ar.uid')
                 ->join('e_nav_list as na','ar.nav_id = na.nav_id')
-                ->paginate('15',false,$options);
+                ->order('ar.add_time DESC')->paginate('15',false,$options);
         $page = $data->render();
         return ($data || $page) ? ['data' => $data,'page' => $page] : null;
     }

@@ -28,7 +28,7 @@ class Userp extends Model
         $isert_data = [
             'user_name' => $data['user_name'],
             'pass_word' => $pass_word,
-            'head_img' => "",
+            'head_img' => $data['head_img'],
             'mobile' => $data['mobile'],
             'salt_str' => $rand_str,
             'register_ip' => $_SERVER['REMOTE_ADDR'],
@@ -57,7 +57,7 @@ class Userp extends Model
      * @return array or null;
      */
     public function get_user_list($options){
-        $data = Db::table('e_user')->paginate(15,false,$options);
+        $data = Db::table('e_user')->order('add_time DESC')->paginate(15,false,$options);
         $page = $data->render();
         return ($data || $page) ? ['data' => $data,'page' => $page] : null;
     }

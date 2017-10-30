@@ -51,52 +51,52 @@
     </tr>
     </thead>
     <tbody>
-    {volist name="data" id="vo"}
+    {volist name="art_data" id="item"}
     <tr>
         <td>
             <input type="checkbox">
         </td>
-        <td>{$vo.article_id}</td>
+        <td>{$item.article_id}</td>
         <td>
             <div class="layui-table-cell laytable-cell-1-sign">
-                {$vo.article_title}
+                {$item.article_title}
             </div>
         </td>
         <td>
             <div class="layui-table-cell laytable-cell-1-sign">
-                {$vo.content}
+                {$item.content}
             </div>
         </td>
         <td>
             <div class="layui-table-cell laytable-cell-2-sign">
-                {$vo.img_url ? $vo.img_url : '空'}
+                {$item.img_url ? $item.img_url : '空'}
             </div>
         </td>
         <td>
             <div class="layui-table-cell laytable-cell-2-sign">
-                {$vo.music_url ? $vo.music_url : '空'}
+                {$item.music_url ? $item.music_url : '空'}
             </div>
         </td>
         <td>
             <div class="layui-table-cell laytable-cell-2-sign">
-                {$vo.video_url ? $vo.video_url : '空'}
+                {$item.video_url ? $item.video_url : '空'}
             </div>
         </td>
-        <td>{$vo.user_name}</td>
-        <td>{$vo.nav_name}</td>
-        <td>{$vo.see_num}</td>
+        <td>{$item.user_name}</td>
+        <td>{$item.nav_name}</td>
+        <td>{$item.see_num}</td>
         <td>
             <div class="layui-table-cell laytable-cell-1-sign">
-                {$vo.add_time|date="y-m-d h:i:s",###}
+                {$item.add_time|date="y-m-d h:i:s",###}
             </div>
         </td>
         <td>
-            {$vo.status==1 ? '正常' : '已删除'}
+            {$item.status==1 ? '正常' : '已删除'}
         </td>
         <td>
-            <div class="layui-table-cell laytable-cell-1-10"><a href="{:url('home/article/article_details',['article_id' => $vo.article_id])}" class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
-                <a article_id="{$vo.article_id}" status="{$vo.status==1 ? 3 : 1}" onclick="del_article(this)" href="javascript:;" class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">
-                    {$vo.status==1 ? '删除' : '恢复上线'}
+            <div class="layui-table-cell laytable-cell-1-10"><a href="{:url('home/article/article_details',['article_id' => $item.article_id])}" class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
+                <a article_id="{$item.article_id}" status="{$item.status==1 ? 3 : 1}" onclick="del_article(this)" href="javascript:;" class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">
+                    {$item.status==1 ? '删除' : '恢复上线'}
                 </a>
             </div>
         </td>
