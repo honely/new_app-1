@@ -76,11 +76,11 @@ class Userp extends Model
 
     /**
      * 会员禁言状态
-     * @param $uid 会员id
+     * @param $uid 会员id  $status 会员状态
      * @return true or false;
      */
-    public function update_user_status($uid){
-        $data = ['status' => 2];
+    public function update_user_status($uid,$status){
+        $data = ['status' => $status];
         $res = Db::table('e_user')->where(['uid' => $uid])->update($data);
         return $res ? true : false;
     }

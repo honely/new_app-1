@@ -64,7 +64,8 @@ class User extends Controller
             'path'=>url('index')
         ];
         $get_user_list = $user_model->get_user_list($options);
-        $this->assign('data',$get_user_list);
+        $this->assign('data',$get_user_list['data']);
+        $this->assign('page',$get_user_list['page']);
         return $this->fetch('index');
 
     }
@@ -101,8 +102,9 @@ class User extends Controller
             $this->success('你没有权限进行该操作！','home/index/index');
         }
         $uid = input('uid');
+        $status = input('status');
         $user_model = new Userp();
-        $gag_user = $user_model->update_user_status($uid);
+        $gag_user = $user_model->update_user_status($uid,$status);
         return $gag_user ? json(['code' => 1,'msg' => '修改成功！']) : json(['code' => -1,'msg' => '修改失败！']);
 
     }
