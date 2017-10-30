@@ -33,6 +33,7 @@ class Userp extends Model
             'salt_str' => $rand_str,
             'register_ip' => $_SERVER['REMOTE_ADDR'],
             'integral' => config('def_integ'),
+            'is_plat' => 1,
             'add_time' => time(),
             'status' => 1
         ];
