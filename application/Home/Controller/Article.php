@@ -134,19 +134,10 @@ class Article extends Controller
      * 图片上传、视频、音频
      */
     public function Upload_file(){
-        $param = Request::instance()->post();
-        if($param){
-            $route = 'public/article/';
-            if($param['file_format'] == "img"){
-                $type = 0;
-            }elseif ($param['file_format'] == 'audio'){
-                $type = 1;
-            }else{
-                $type = 2;
-            }
-            $file_url = upload_img('file',20000,$route,$type);
-            return $file_url;
-        }
+        $route = '../public/article/';
+        $host = $_SERVER['SERVER_NAME'];
+        $file_url = upload_img('file',400000,$route,0);
+        return json(['url_str' => $host.'/article/'.$file_url]);
     }
 
 

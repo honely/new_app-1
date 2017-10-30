@@ -68,7 +68,6 @@
                             预览图：
                             <div class="layui-upload-list" id="demo2"></div>
                         </blockquote>
-                        <input type="hidden" name="img_url" value="">
                     </div>
                 </div>
                 <div class="layui-form-item file_format" file-data="video">
@@ -164,7 +163,7 @@
             }
             ,done: function(res){
                 //上传完毕
-                console.log(res);
+                $('#demo2').append('<input type="hidden" name="img_url" value="'+ res.url_str +'">')
             }
         });
 
@@ -213,10 +212,19 @@
 
     /**添加新的作品**/
     function add_article() {
+        var img_url_node = $("input[name='img_url']"),img_list = '';
+        for (var i = 0; i < img_url_node.length; i++){
+            img_list += img_url_node.eq(i).val() + ',';
+        }
         $.ajax({
             'type':'post',
             'url':"{:url('home/article/add_new_article')}",
-            'data':$("#article_data").serialize(),
+            'data':{
+                'title':$("input[name='title']").val(),
+                'nav_sort':$("select[name='nav_sort']").val(),
+                'content':$("textarea").val(),
+                'img_url':img_list
+            },
             'success':function (result) {
                 console.log(result);
                 layui.use('layer', function() {

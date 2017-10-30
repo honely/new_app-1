@@ -94,10 +94,11 @@ function upload_img($name,$maxsize,$route,$type = 0){
         $_lastName = end($_arrName);
         $_savrName = "";
         if(in_array($_lastName,$arr) && $_size <= $maxsize){
-            $_savrName = $route.uniqid().'.'.$_lastName;
+            $img_name = uniqid().'.'.$_lastName;
+            $_savrName = $route.$img_name;
             move_uploaded_file($_obj,$_savrName);
         }
-        return $_savrName;
+        return $img_name;
 
     }
 
