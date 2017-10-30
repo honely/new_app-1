@@ -70,25 +70,7 @@ class User extends Controller
 
     }
 
-
-    /**
-     * 删除平台会员
-     */
-    public function Del_plat_user(){
-        $power_str = "shanchupingtaihuiyuan";
-        if(!login_over_time()){
-            $this->redirect('home/login/index');
-        }
-        if(!_mate_power($power_str)){
-            $this->success('你没有权限进行该操作！','home/index/index');
-        }
-        $user_model = new Userp();
-        $uid = input('uid');
-        $del_plat_user = $user_model->del_plat_user($uid);
-        return $del_plat_user ? json(['code' => 1,'msg' => '操作成功！']) : json(['code' => -1,'msg' => '操作失败！']);
-
-    }
-
+    
 
     /**
      * 会员禁言 & 恢复禁言

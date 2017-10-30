@@ -64,17 +64,6 @@ class Userp extends Model
 
 
     /**
-     * 删除平台会员
-     * @param $uid 会员id
-     * @return true or false;
-     */
-    public function del_plat_user($uid){
-        $res = Db::table('e_user')->where(['uid' => $uid,'is_plat' => 1])->update(['status' => 3]);
-        return $res ? true : false;
-    }
-
-
-    /**
      * 会员禁言状态
      * @param $uid 会员id  $status 会员状态
      * @return true or false;
