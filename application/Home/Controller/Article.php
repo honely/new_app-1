@@ -88,7 +88,6 @@ class Article extends Controller
     public function Update_article(){
         $power_str = 'xiugaizuopin';
         if(!login_over_time()){
-            $this->redirect('home/login/index');
             return json(['code' => -2,'url' => 'home/login/index']);
         }
         if(!_mate_power($power_str)){
