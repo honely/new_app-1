@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-10-27 10:44:07
+Date: 2017-11-01 15:32:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -47,16 +47,19 @@ CREATE TABLE `e_article` (
   `is_like` tinyint(1) NOT NULL COMMENT '是否被点赞',
   `see_num` int(11) NOT NULL COMMENT '浏览次数',
   `add_time` int(10) NOT NULL COMMENT '添加时间',
+  `update_time` int(10) NOT NULL COMMENT '修改时间',
   `status` tinyint(1) NOT NULL COMMENT '状态',
   PRIMARY KEY (`article_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='作品表';
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='作品表';
 
 -- ----------------------------
 -- Records of e_article
 -- ----------------------------
-INSERT INTO `e_article` VALUES ('1', '测试', '1', '1', '0', '0', '0', '0', '1');
-INSERT INTO `e_article` VALUES ('5', '上传测试1', '1', '1', '0', '0', '0', '1508920150', '3');
-INSERT INTO `e_article` VALUES ('6', '测试标题2', '1', '1', '0', '0', '0', '1508989651', '3');
+INSERT INTO `e_article` VALUES ('1', '测试文章1', '1', '1', '0', '0', '0', '0', '1509341433', '1');
+INSERT INTO `e_article` VALUES ('5', '上传测试1', '1', '1', '0', '0', '0', '1508920150', '1509341425', '3');
+INSERT INTO `e_article` VALUES ('6', '测试标题2', '1', '1', '0', '0', '0', '1508989651', '0', '3');
+INSERT INTO `e_article` VALUES ('7', 'qwertyt', '1', '0', '0', '0', '0', '1509334727', '0', '1');
+INSERT INTO `e_article` VALUES ('8', '给V缝纫工', '1', '1', '0', '0', '0', '1509335173', '1509514373', '3');
 
 -- ----------------------------
 -- Table structure for e_article_info
@@ -71,14 +74,16 @@ CREATE TABLE `e_article_info` (
   `video_url` varchar(255) NOT NULL COMMENT '视频地址',
   PRIMARY KEY (`id`),
   KEY `article` (`article_id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='作品详情表';
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='作品详情表';
 
 -- ----------------------------
 -- Records of e_article_info
 -- ----------------------------
-INSERT INTO `e_article_info` VALUES ('1', '1', '测试数据', '', '', '');
-INSERT INTO `e_article_info` VALUES ('5', '5', '测试内容', '', '', '');
+INSERT INTO `e_article_info` VALUES ('1', '1', '<p style=\"text-align: center;\">测试数据</p>', 'http://img.qmwjj.cc/head/oJFl8j5faV_20170916_!!22941.jpg,http://img.qmwjj.cc/head/oJFl8j5faV_20170916_!!22941.jpg,', '', '');
+INSERT INTO `e_article_info` VALUES ('5', '5', '<p style=\"text-align: center;\">测试内容</p>', '', '', '');
 INSERT INTO `e_article_info` VALUES ('6', '6', '<p style=\"text-align: center;\">这是一个测试数据</p>', '', '', '');
+INSERT INTO `e_article_info` VALUES ('7', '7', '<p style=\"text-align: center;\">图片上传测试</p>', '', '', '');
+INSERT INTO `e_article_info` VALUES ('8', '8', '<p style=\"text-align: center;\"><img src=\"http://www.ebay.com/static/javascript/images/face/13.gif\" alt=\"[偷笑]\">这是内容<img src=\"http://www.ebay.com/static/javascript/images/face/14.gif\" alt=\"[亲亲]\">啊哈哈哈哈<img src=\"http://www.ebay.com/static/javascript/images/face/37.gif\" alt=\"[色]\"></p>', 'http://www.ebay.com/article/59f6a07764c1e.jpg,http://www.ebay.com/article/59f6a077b45a0.jpg,http://www.ebay.com/article/59f6a077bb6ea.jpg,http://www.ebay.com/article/59f6a0785bfb5.jpg,', '', '');
 
 -- ----------------------------
 -- Table structure for e_brand
@@ -240,6 +245,23 @@ CREATE TABLE `e_nav_list` (
 INSERT INTO `e_nav_list` VALUES ('1', '测试分类', '0', '1');
 
 -- ----------------------------
+-- Table structure for e_order
+-- ----------------------------
+DROP TABLE IF EXISTS `e_order`;
+CREATE TABLE `e_order` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `order_num` int(11) NOT NULL COMMENT '特订订单id',
+  `product_id` int(11) NOT NULL COMMENT '商品id',
+  `receipt_addr` int(11) NOT NULL COMMENT '收货地址',
+  `uid` int(11) NOT NULL COMMENT '会员id',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='订单表';
+
+-- ----------------------------
+-- Records of e_order
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for e_product
 -- ----------------------------
 DROP TABLE IF EXISTS `e_product`;
@@ -313,6 +335,29 @@ CREATE TABLE `e_qq` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for e_receipt_addr
+-- ----------------------------
+DROP TABLE IF EXISTS `e_receipt_addr`;
+CREATE TABLE `e_receipt_addr` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `receipt_name` varchar(255) NOT NULL COMMENT '收货人姓名',
+  `province` int(11) NOT NULL COMMENT '省',
+  `city` int(11) NOT NULL COMMENT '市',
+  `area` int(11) NOT NULL COMMENT '区',
+  `detailed_addr` varchar(255) NOT NULL COMMENT '详细地址',
+  `telephone` varchar(255) NOT NULL COMMENT '收货人电话',
+  `email` varchar(255) NOT NULL COMMENT '邮箱',
+  `add_time` int(10) NOT NULL COMMENT '添加时间',
+  `uid` int(11) NOT NULL COMMENT '会员id',
+  `status` tinyint(1) NOT NULL COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='收货地址';
+
+-- ----------------------------
+-- Records of e_receipt_addr
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for e_share
 -- ----------------------------
 DROP TABLE IF EXISTS `e_share`;
@@ -378,12 +423,16 @@ CREATE TABLE `e_user` (
   `add_time` int(10) NOT NULL COMMENT '注册时间',
   `status` tinyint(1) NOT NULL COMMENT '状态(1正常，2禁言，3删除，4禁止使用)',
   PRIMARY KEY (`uid`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='会员基本信息表';
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='会员基本信息表';
 
 -- ----------------------------
 -- Records of e_user
 -- ----------------------------
-INSERT INTO `e_user` VALUES ('1', 'admin', '123456', '', '', '', '', '0', '0', '0', '0', '0');
+INSERT INTO `e_user` VALUES ('1', 'admin', '123456', 'http://www.ebay.com/article/59f6a0785bfb5.jpg', '13474376703', '', '127.0.0.1', '100', '0', '0', '0', '1');
+INSERT INTO `e_user` VALUES ('2', '米玛', '1de4d4e54196393de362e0de0e4fa068', 'http://www.ebay.com/article/59f6a0785bfb5.jpg', '13474376703', 'i7qu5v', '127.0.0.1', '100', '0', '0', '1509350464', '1');
+INSERT INTO `e_user` VALUES ('3', '你咯', 'dcc2c37d5c27bd6a81c4620c73d20b69', 'http://www.ebay.com/headImg/59f6dccedff01.jpg', '13474376703', 'a4wbw8', '127.0.0.1', '100', '0', '0', '1509350646', '1');
+INSERT INTO `e_user` VALUES ('4', '妮妮', '743628bed3723f491651a827ae81c5c0', 'http://www.ebay.com/headImg/59f6ddbdce472.jpg', '1347437603', 'z9n5e4', '127.0.0.1', '100', '0', '1', '1509350848', '1');
+INSERT INTO `e_user` VALUES ('5', 'plat', '9c537a5c9f232004c345f15dc64ac99c', 'http://www.ebay.com/headImg/59f96de17a9a6.jpg', '13473796', '29bb24', '127.0.0.1', '100', '0', '1', '1509518818', '1');
 
 -- ----------------------------
 -- Table structure for e_user_coupon
