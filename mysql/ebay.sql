@@ -65,7 +65,7 @@ DROP TABLE IF EXISTS `e_article_info`;
 CREATE TABLE `e_article_info` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `article_id` int(11) NOT NULL COMMENT '作品id',
-  `content` varchar(255) NOT NULL COMMENT '作品内容',
+  `content` varchar(6533) NOT NULL COMMENT '作品内容',
   `img_url` varchar(255) NOT NULL COMMENT '作品图片',
   `music_url` varchar(255) NOT NULL COMMENT '音乐地址',
   `video_url` varchar(255) NOT NULL COMMENT '视频地址',

@@ -78,13 +78,13 @@ class Articlem extends Model
             'update_time' => time()
         ];
         $update_info = [
-            'content' => $data['content'],
+            'content' => trim($data['content']," "),
         ];
         $res = Db::table('e_article')->where(['article_id' => $data['article_id']])
                ->update($update_data);
         $res_info = Db::table('e_article_info')->where(['article_id' => $data['article_id']])
                     ->update($update_info);
-        return ($res && $res_info) ? true : false;
+        return ($res || $res_info) ? true : false;
     }
 
 
