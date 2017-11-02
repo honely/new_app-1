@@ -5,9 +5,9 @@
  * Date: 2017/11/1
  * Time: 14:50
  */
-namespace app\home\controller;
+namespace app\Home\controller;
 use app\Home\model\Couponm;
-use think\controller;
+use think\Controller;
 use think\Db;
 use think\Request;
 
@@ -26,8 +26,19 @@ class Coupon extends Controller
             $this->success('您没有权限进行该操作！','home/index/index');
         }
         $coupon_model = new Couponm();
-        $get_coupon_list = $coupon_model->get_coupon_info();
-        $this->assign('data',$get_coupon_list);
+        $page = input('page');
+        if(isset($page) && $page !== null){
+            $current = $page;
+        }else{
+            $current = 1;
+        }
+        $options = [
+            'page' => $current,
+            'url' => url('index')
+        ];
+        $get_coupon_list = $coupon_model->get_coupon_info($options);
+        $this->assign('data',$get_coupon_list['data']);
+        $this->assign('page',$get_coupon_list['page']);
         return $this->fetch('index');
 
     }
@@ -75,7 +86,8 @@ class Coupon extends Controller
         $coupon_model = new Couponm();
         $param = Request::instance()->get();
         $coupon_id = $param['coupon_id'];
-        $del_coupon = $coupon_model->Del_coupon($coupon_id);
+        $status = $param['status'];
+        $del_coupon = $coupon_model->Del_coupon($coupon_id,$status);
         return $del_coupon ? json(['code' => 1,'msg' => '删除成功！']) : json(['code' => -2,'msg' => '删除失败！']);
 
 
@@ -98,10 +110,11 @@ class Coupon extends Controller
         $coupon_info = $coupon_model->coupon_info($coupon_id);
         if(Request::instance()->isPost()){
             $param = Request::instance()->post();
-
+            $upate_coupon = $coupon_model->update_coupon($param);
+            return $upate_coupon ? json(['code' => 1,'msg' => '修改成功！']) : json(['code' => -1,'msg' => '修改失败！']);
         }
         $this->assign('data',$coupon_info);
-        return $this->fetch('details_coupon' );
+        return $this->fetch('coupon_details' );
 
 
 

@@ -21,11 +21,15 @@ class Couponm extends Model
 
     /**
      * 获取礼券列表信息
+     * @param $options 分页所需要的参数
      * @return array or null;
      */
-    public function get_coupon_info(){
-        $data = Db::table('e_coupon')->order('add_time DESC')->select();
-        return $data ? $data : null;
+    public function get_coupon_info($options){
+        $data = Db::table('e_coupon')->order('add_time DESC')
+                ->paginate(15,false,$options);
+        $page = $data->render();
+        return ($data || $page) ? ['data' => $data,'page' => $page] :
+                                  ['data' => '','page' => ''] ;
     }
 
 
@@ -35,12 +39,17 @@ class Couponm extends Model
      * @retun true or false;
      */
     public function add_coupon($data){
+        if(isset($data['status']) && $data['status'] == 'on'){
+            $status = 1;
+        }else{
+            $status = 3;
+        }
         $insert_data = [
             'coupon_name' => $data['coupon_name'],
             'quota' => $data['quota'],
             'use_rule' => $data['use_rule'],
             'add_time' => time(),
-            'status' => 1
+            'status' => $status
         ];
         $res = Db::table('e_coupon')->insert($insert_data);
         return $res ? true : false;
@@ -49,12 +58,12 @@ class Couponm extends Model
 
     /**
      * 删除礼券
-     * @param  $coupon_id  礼券id
+     * @param  $coupon_id  礼券id  $status  礼券状态
      * @return true or false;
      */
-    public function Del_coupon($coupon_id){
+    public function Del_coupon($coupon_id,$status){
         $update_data = [
-            'status' => 3
+            'status' => $status
         ];
         $where = ['id' => $coupon_id];
         $res = Db::table('e_coupon')->where($where)->update($update_data);
@@ -70,6 +79,22 @@ class Couponm extends Model
     public function coupon_info($coupon_id){
         $data = Db::table('e_coupon')->where(['id' => $coupon_id])->select();
         return $data ? $data : null;
+    }
+
+
+    /**
+     * 修改礼券
+     * @param  $data 礼券的详情数据
+     * @return true or false;
+     */
+    public function update_coupon($data){
+        $upate_data = [
+            'coupon_name' => $data['coupon_name'],
+            'quota' => $data['quota'],
+            'use_rule' => $data['use_rule']
+        ];
+        $res = Db::table('e_coupon')->where(['id' => $data['coupon_id']])->update($upate_data);
+        return ($res || $res == 0) ? true : false;
     }
 
 

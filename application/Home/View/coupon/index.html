@@ -3,7 +3,7 @@
 <div style="padding: 0 10px">
     <style>
         .laytable-cell-1-sign{ width:150px;padding: 0 }
-        .laytable-cell-2-sign{width: 100px;padding: 0}
+        .laytable-cell-2-sign{width: 150px;padding: 0}
         .pagination{height: 26px;position: relative;display: inline-block;}
         .pagination > li{
             height: 26px;
@@ -14,19 +14,18 @@
             float: left;
             font-size: 20px;
         }
+        td{
+            padding: 5px 15px!important;
+        }
     </style>
     <table class="layui-table">
         <colgroup>
             <col width="10">
-            <col width="150">
-            <col width="100">
-            <col width="150">
-            <col width="200">
             <col width="100">
             <col width="200">
             <col width="50">
             <col width="350">
-            <col width="150">
+            <col width="350">
             <col width="250">
             <col>
         </colgroup>
@@ -35,15 +34,11 @@
             <th>
                 <input type="checkbox">
             </th>
-            <th>会员ID</th>
-            <th>会员名</th>
-            <th>头像</th>
-            <th>手机号</th>
-            <th>积分</th>
-            <th>是否被关注</th>
-            <th>是否plat</th>
-            <th>注册时间</th>
-            <th>注册IP</th>
+            <th>礼券ID</th>
+            <th>名称</th>
+            <th>金额</th>
+            <th>规则</th>
+            <th>添加时间</th>
             <th>状态</th>
             <th>操作</th>
         </tr>
@@ -54,64 +49,42 @@
             <td>
                 <input type="checkbox">
             </td>
-            <td>{$vo.uid}</td>
+            <td>{$vo.id}</td>
             <td>
                 <div class="layui-table-cell laytable-cell-1-sign">
-                    {$vo.user_name}
+                    {$vo.coupon_name}
                 </div>
             </td>
             <td style="height: 50px">
                 <div class="layui-table-cell laytable-cell-1-sign" style="height: auto">
-                    <img style="height: 50px" src="{$vo.head_img}" alt="">
+                    ￥{$vo.quota}
                 </div>
             </td>
             <td>
                 <div class="layui-table-cell laytable-cell-2-sign">
-                    {$vo.mobile}
+                    满 <span style="color:red;font-weight: bold">{$vo.use_rule}</span> 可以使用
                 </div>
             </td>
             <td>
-                <div class="layui-table-cell laytable-cell-2-sign">
-                    {$vo.integral}
+                <div class="layui-table-cell laytable-cell-1-sign">
+                    {$vo.add_time|date="y-m-d h:i:s",###}
                 </div>
             </td>
-            <td>
-                <div class="layui-table-cell laytable-cell-2-sign">
-                    {$vo.is_follow ? '是' : '否'}
-                </div>
-            </td>
-            <td>
-                <div class="layui-table-cell laytable-cell-2-sign">
-                    {$vo.is_plat ? '是' : '否'}
-                </div>
-            </td>
-            <td>{$vo.add_time|date='y-m-d h:i:s', ###}</td>
-            <td>{$vo.register_ip}</td>
             <td>
                 <?php
                     if($vo['status'] == 1){
                         echo '正常';
-                     }elseif($vo['status'] == 2){
-                        echo '禁言';
-                      }elseif($vo['status'] == 3){
-                            echo '删除';
-                       }elseif($vo['status'] == 4){
-                            echo '已被禁用';
-                       };
+                    }elseif($vo['status'] == 3){
+                            echo '不可用';
+                    }
                 ?>
             </td>
             <td>
                 <div class="layui-table-cell laytable-cell-1-10">
-                    <a href="{:url('home/article/article_details',['article_id' => $vo.uid])}" class="layui-btn layui-btn-mini" lay-event="edit">
+                    <a href="{:url('home/coupon/details_coupon',['coupon_id' => $vo.id])}" class="layui-btn layui-btn-mini" lay-event="edit">
                         编辑
                     </a>
-                    <a uid="{$vo.uid}" status="{$vo.status==2 ? 1 : 2}" onclick="update_status(this)" href="javascript:;" class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">
-                        {$vo.status==2 ? '恢复发言' : '禁言'}
-                    </a>
-                    <a uid="{$vo.uid}" status="{$vo.status==4 ? 1 : 4}" onclick="update_status(this)" href="javascript:;" class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">
-                        {$vo.status==4 ? '恢复正常' : '冰封'}
-                    </a>
-                    <a uid="{$vo.uid}" status="{$vo.status==3 ? 1 : 3}" onclick="update_status(this)" href="javascript:;" class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">
+                    <a uid="{$vo.id}" status="{$vo.status==3 ? 1 : 3}" onclick="update_status(this)" href="javascript:;" class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">
                         {$vo.status==3 ? '恢复正常' : '删除'}
                     </a>
                 </div>
@@ -125,7 +98,7 @@
     </div>
     <script>
         $(".pagination .active").css('color','red');
-        /**修改会员状态操作**/
+        /**修改礼券状态操作**/
         function update_status(obj) {
             var id = obj.getAttribute('uid'),status = obj.getAttribute('status');
             if(status == 3 || status == 4 || status == 2){
@@ -159,9 +132,9 @@
         function ajax(id,status){
             $.ajax({
                 'type':'get',
-                'url':"{:url('home/user/gag_user')}",
+                'url':"{:url('home/coupon/del_coupon')}",
                 'data':{
-                    'uid':id,
+                    'coupon_id':id,
                     'status' : status
                 },
                 'success':function (result) {
