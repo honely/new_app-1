@@ -17,3 +17,10 @@
 #guanliyuanliebiao*管理员列表
 #xiugaiguanliyuanzhuangtai*修改管理员状态
 #tianjiaquanxian*添加权限
+#daohangliebiao*导航列表
+#tianjiadaohang*添加导航
+#xiugaidaohangzhuangtai*修改导航状态
+#xiugaidaohangxinxi*修改导航信息
+#xiugaibannerzhuangtai*修改导航banner状态
+#xiugainavbannerxinxi*修改导航banner信息
+#tianjianavbanner*添加导航

@@ -72,22 +72,6 @@ class Login extends Controller
     }
 
 
-    /**
-     * 添加权限
-     */
-    public function Add_user_power(){
-        $power_str = "tianjiaquanxian";
-        if(!login_over_time()){
-            return json(['code' => 0,'msg' => '账号在线超时！']);
-        }
-        if(!_mate_power($power_str)){
-            return json(['code' => -1,'msg' => '你没有权限进行该操作！']);
-        }
-        $power_file = _add_power();
-
-
-
-    }
 
 
 
