@@ -6,6 +6,7 @@
  * Time: 12:02
  */
 namespace app\Home\controller;
+use app\Home\model\Couponm;
 use app\Home\model\Userp;
 use think\Cache;
 use think\Controller;
@@ -65,6 +66,8 @@ class User extends Controller
             'path'=>url('index')
         ];
         $get_user_list = $user_model->get_user_list($options);
+        $get_coupon_list = Db::table('e_coupon')->where(['status' => 1])->select();
+        $this->assign('coupon_data',$get_coupon_list);
         $this->assign('data',$get_user_list['data']);
         $this->assign('page',$get_user_list['page']);
         return $this->fetch('index');
@@ -91,6 +94,28 @@ class User extends Controller
         return $gag_user ? json(['code' => 1,'msg' => '修改成功！']) : json(['code' => -1,'msg' => '修改失败！']);
 
     }
+
+
+    /**
+     * 向会员发送礼券
+     */
+    public function send_coupon(){
+        $power_str = 'fasongliquan';
+        if(!login_over_time()){
+            return json(['code' => -2,'url' => 'home/login/index']);
+        }
+        if(!_mate_power($power_str)){
+            $this->success('您没有权限进行该操作！','home/user/index');
+        }
+        $user_model = new Userp();
+        $uid = Request::instance()->get('uid');
+        $coupon_id = Request::instance()->get('coupon_id');
+        $send_coupon = $user_model->send_coupon($coupon_id,$uid);
+        return $send_coupon ? json(['code' => 1,'msg' => '发送成功！']) : json(['code' => -1,'msg' => '发送失败！']);
+
+
+    }
+
 
 
     /**

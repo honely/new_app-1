@@ -55,6 +55,14 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">有效天数</label>
+                            <div class="layui-input-inline">
+                                <input type="text" value="{$data[0]['effective_day']}" name="effective_day" lay-verify="effective_day" autocomplete="off" placeholder="发表时间" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
                         <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
                     </div>
                 </form>

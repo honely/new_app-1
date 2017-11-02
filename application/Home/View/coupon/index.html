@@ -25,6 +25,7 @@
             <col width="200">
             <col width="50">
             <col width="350">
+            <col width="100">
             <col width="350">
             <col width="250">
             <col>
@@ -38,6 +39,7 @@
             <th>名称</th>
             <th>金额</th>
             <th>规则</th>
+            <th>有效天数</th>
             <th>添加时间</th>
             <th>状态</th>
             <th>操作</th>
@@ -63,6 +65,11 @@
             <td>
                 <div class="layui-table-cell laytable-cell-2-sign">
                     满 <span style="color:red;font-weight: bold">{$vo.use_rule}</span> 可以使用
+                </div>
+            </td>
+            <td>
+                <div class="layui-table-cell laytable-cell-2-sign">
+                    {$vo.effective_day} 天有效
                 </div>
             </td>
             <td>

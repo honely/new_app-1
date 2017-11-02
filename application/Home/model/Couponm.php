@@ -49,6 +49,7 @@ class Couponm extends Model
             'quota' => $data['quota'],
             'use_rule' => $data['use_rule'],
             'add_time' => time(),
+            'effective_day' => $data['effective_day'],
             'status' => $status
         ];
         $res = Db::table('e_coupon')->insert($insert_data);
@@ -91,7 +92,8 @@ class Couponm extends Model
         $upate_data = [
             'coupon_name' => $data['coupon_name'],
             'quota' => $data['quota'],
-            'use_rule' => $data['use_rule']
+            'use_rule' => $data['use_rule'],
+            'effective_day' => $data['effective_day']
         ];
         $res = Db::table('e_coupon')->where(['id' => $data['coupon_id']])->update($upate_data);
         return ($res || $res == 0) ? true : false;

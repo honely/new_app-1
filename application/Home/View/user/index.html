@@ -105,6 +105,7 @@
                     <!--<a href="{:url('home/article/article_details',['article_id' => $vo.uid])}" class="layui-btn layui-btn-mini" lay-event="edit">
                         编辑
                     </a>-->
+                    <button data-method="notice" data-type="auto" data-uid="{$vo.uid}" class="layui-btn layui-btn-mini coupon">发送礼券</button>
                     <a uid="{$vo.uid}" status="{$vo.status==2 ? 1 : 2}" onclick="update_status(this)" href="javascript:;" class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">
                         {$vo.status==2 ? '恢复发言' : '禁言'}
                     </a>
@@ -123,6 +124,73 @@
     <div>
         {$page}
     </div>
+    <script>
+        layui.use('layer', function(){
+            var $ = layui.jquery, layer = layui.layer;
+            var active = {
+                notice: function(othis){
+                    var uid = othis.data('uid');
+                    var node = '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">'+
+                                    '<form action="" id="coupon_data" style="width: 100px">' +
+                                        '<label style="margin-bottom: 5px">选择礼券:</label>'+
+                                        '<select name="coupon" style="width: 200px;height: 30px;border: none;">' +
+                                            '{volist name="coupon_data" id="item"}<option value="{$item.id}">{$item.coupon_name}</option>{/volist}'+
+                                        '</select>'+
+                                    '</form>'+
+                               '</div>';
+                    layer.open({
+                        type: 1
+                        ,title: false
+                        ,closeBtn: false
+                        ,area: '300px;'
+                        ,number:0
+                        ,shade: 0.8
+                        ,id: 'LAY_layuipro'
+                        ,btn: ['发送', '取消']
+                        ,btnAlign: 'c'
+                        ,moveType: 1
+                        ,content: node
+                        ,success: function(layero){
+                            var btn = layero.find('.layui-layer-btn');
+                            btn.find('.layui-layer-btn0').click(function () {
+                                var coupon_id = $("select[name='coupon']").val();
+                                $.ajax({
+                                    'type':"get",
+                                    'url':"{:url('home/user/send_coupon')}",
+                                    'data':{
+                                        'uid':uid,
+                                        'coupon_id':coupon_id
+                                    },
+                                    'success':function (result) {
+                                        layui.use('layer', function() {
+                                            var $ = layui.jquery,
+                                                layer = layui.layer;
+                                            layer.open({
+                                                title: '操作结果信息'
+                                                ,content: result.msg
+                                                ,yes: function(layero, index){
+                                                    location.reload();
+                                                }
+                                            });
+                                        });
+                                    },
+                                    'error':function () {
+                                        console.log('error');
+                                    }
+                                })
+                            });
+                        }
+                    });
+                }
+            };
+
+            $('.coupon').on('click', function(){
+                var othis = $(this), method = othis.data('method');
+                active[method] ? active[method].call(this, othis) : '';
+            });
+
+        });
+    </script>
     <script>
         $(".pagination .active").css('color','red');
         /**修改会员状态操作**/

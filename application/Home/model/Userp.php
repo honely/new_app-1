@@ -76,4 +76,30 @@ class Userp extends Model
     }
 
 
+    /**
+     * 发送礼券
+     * @param $coupon_id 礼券id   $uid  会员uid
+     * @return true or false;
+     */
+    public function send_coupon($coupon_id,$uid){
+        $data = Db::table('e_coupon')->where(['id' => $coupon_id])->select();
+        $time = time();
+        $day = $data[0]['effective_day'];
+        if($data[0]['effective_day']){
+            $over_time = date("Y-m-d H:i:s",strtotime("+$day day"));
+        }else{
+            $over_time = date("Y-m-d H:i:s",strtotime("+1 day"));
+        }
+        $insert_data = [
+            'uid' => $uid,
+            'coupon_id' => $coupon_id,
+            'add_time' => $time,
+            'overdue_time' => strtotime($over_time),
+            'status' => 1
+        ];
+        $res = Db::table('e_user_coupon')->insert($insert_data);
+        return $res ? true : false;
+    }
+
+
 }
