@@ -6,6 +6,7 @@
  * Time: 12:02
  */
 namespace app\Home\controller;
+use app\Home\model\Admin;
 use app\Home\model\Couponm;
 use app\Home\model\Userp;
 use think\Cache;
@@ -20,7 +21,7 @@ class User extends Controller
      * 平台会员添加
      */
     public function Add_plat_user(){
-        $power_str = "tijianpingtaihuiyuan";
+        $power_str = "tianjiapingtaihuiyuan";
         if(!login_over_time()){
             $this->redirect('home/login/index');
         }
@@ -71,6 +72,92 @@ class User extends Controller
         $this->assign('data',$get_user_list['data']);
         $this->assign('page',$get_user_list['page']);
         return $this->fetch('index');
+
+    }
+
+
+    /**
+     * 管理员列表
+     */
+    public function Admin_list(){
+        $power_str = "guanliyuanliebiao";
+        if(!login_over_time()){
+            $this->redirect('home/login/index');
+        }
+        if(!_mate_power($power_str)){
+            $this->success('您没有权限进行该操作！','home/user/index');
+        }
+        $user_model = new Admin();
+        $get_admin_user = $user_model->get_admin_list();
+        $this->assign('admin_user_data',$get_admin_user);
+        return $this->fetch('admin_list');
+
+    }
+
+
+
+    /**
+     * 管理员权限管理
+     */
+    public function Power(){
+        $power_str = "quanxianguanli";
+        if(!login_over_time()){
+            $this->redirect('home/login/index');
+        }
+        if(!_mate_power($power_str)){
+            $this->success("您没有权限进行该操作！",'home/user/index');
+        }
+        $uid = input('uid');
+        $power_list = _add_power();
+        $power_data = "";
+        foreach ($power_list as $val){
+            $power_data[] = explode('*',$val);
+        }
+        $get_user_power = Db::table('e_admin_user')->where(['id' => $uid])->field('power')->field('id')->select();
+        $user_power_data = explode(',',trim($get_user_power[0]['power'],','));
+        $this->assign('uid',$get_user_power[0]['id']);
+        $this->assign('user_power_data',$user_power_data);
+        $this->assign('power_data',$power_data);
+        return $this->fetch('power_list');
+    }
+
+
+    /**
+     * 管理员添加权限
+     */
+    public function add_power(){
+        $power_str = "tianjiaquanxian";
+        if(!login_over_time()){
+            return json(['code' => -2,'url' => 'home/login/index']);
+        }
+        if(!_mate_power($power_str)){
+            $this->success("您没有权限进行该操作！",'home/user/index');
+        }
+        $admin_model = new Admin();
+        $param = Request::instance()->post();
+        $add_admin_power = $admin_model->add_admin_power($param);
+        return $add_admin_power ? json(['code' => 1,'msg' => '添加成功！']) : json(['code' => -1,'msg' => '添加失败！']);
+
+    }
+
+
+
+    /**
+     * 修改管理员状态
+     */
+    public function Update_admin_status(){
+        $power_str = "xiugaiguanliyuanzhuangtai";
+        if(!login_over_time()){
+            return json(['code' => -2,'url' => 'home/login/index']);
+        }
+        if(!_mate_power($power_str)){
+            $this->success('您没有权限进行该操作！','home/user/index');
+        }
+        $uid = input('uid');
+        $status = input('status');
+        $admin_model = new Admin();
+        $update_admin_status = $admin_model->update_admin_status($uid,$status);
+        return $update_admin_status ? json(['code' => 1,'msg' => '修改成功！']) : json(['code' => -1,'msg' => '修改失败！']);
 
     }
 

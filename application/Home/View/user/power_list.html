@@ -1,0 +1,202 @@
+{include file="common/header" /}
+<legend id="title">管理员权限</legend>
+<div style="padding: 0 10px">
+    <style>
+        .layui-upload-img {
+            width: 92px;
+            height: 92px;
+            margin: 0 10px 10px 0;
+        }
+        .file_format{
+            display: none;
+        }
+    </style>
+    <div class="layui-row">
+        <div class="layui-col-md2">
+            <div class="grid-demo grid-demo-bg1">&nbsp;</div>
+        </div>
+        <div class="layui-col-md8">
+            <div class="grid-demo">
+                <form class="layui-form layui-form-pane" id="add_coupon_data" action="">
+                    <div class="layui-form-item" pane>
+                        <label class="layui-form-label">管理员权限</label>
+                        <div class="layui-input-block">
+                            {volist name="power_data" id="item"}
+                            <input type="checkbox" value="{$item[0]}" name="power" title="{$item[1]}" {volist name="user_power_data" id="vo"}{$vo==$item[0]?"checked":""}{/volist}>
+                            {/volist}
+                        </div>
+                    </div>
+                    <input type="hidden" value="{$uid}" name="uid">
+                    <div class="layui-form-item">
+                        <span class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="layui-col-md2">
+            <div class="grid-demo grid-demo-bg1">&nbsp;</div>
+        </div>
+    </div>
+
+    <script>
+        layui.use(['form', 'layedit', 'laydate','upload'], function(){
+            var $ = layui.jquery,
+                upload = layui.upload;
+            var form = layui.form
+                ,layer = layui.layer
+                ,layedit = layui.layedit
+                ,laydate = layui.laydate;
+
+            //日期
+            laydate.render({
+                elem: '#date'
+            });
+            laydate.render({
+                elem: '#date1'
+            });
+
+            //创建一个编辑器
+            var editIndex = layedit.build('LAY_demo_editor');
+
+            //自定义验证规则
+            form.verify({
+                title: function(value){
+                    if(value.length < 4){
+                        return '标题至少得5个字符啊';
+                    }
+                }
+                ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+                ,nav_sort: function (value) {
+                    if(value == 0){
+                        return "请选择分类";
+                    }
+                }
+                ,content: function(value){
+                    layedit.sync(editIndex);
+                }
+            });
+
+            //监听指定开关
+            form.on('switch(switchTest)', function(data){
+                layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+                    offset: '6px'
+                });
+                layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+            });
+
+            //监听提交
+            form.on('submit(demo1)', function(data){
+                add_coupon();
+                return false;
+            });
+
+            //多图片上传
+            upload.render({
+                elem: '#test2'
+                ,url: "{:url('home/article/upload_file')}"
+                ,multiple: true
+                ,size: 2024 //限制文件大小，单位 KB
+                ,before: function(obj){
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function(index, file, result){
+                        $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+                    });
+                }
+                ,done: function(res){
+                    //上传完毕
+                    console.log(res);
+                }
+            });
+
+            upload.render({
+                elem: '#test5'
+                ,url: "{:url('home/article/upload_file')}"
+                ,accept: 'video' //视频
+                ,size: 60 //限制文件大小，单位 KB
+                ,done: function(res){
+                    console.log(res)
+                }
+            });
+
+
+            upload.render({
+                elem: '#test6'
+                ,url: "{:url('home/article/upload_file')}"
+                ,accept: 'audio' //音频
+                ,size: 60 //限制文件大小，单位 KB
+                ,done: function(res){
+                    console.log(res)
+                }
+            });
+
+
+            form.on('select(file_format)', function(data){
+                console.log(data.value); //得到被选中的值
+                for(var i = 0; i < $(".file_format").length; i++){
+                    if($(".file_format").eq(i).attr("file-data") == data.value){
+                        $(".file_format").hide();
+                        $(".file_format").eq(i).show();
+                    }
+                }
+            });
+
+
+        });
+    </script>
+    <script>
+        /**默认选中**/
+        for(var i = 0; i < $(".file_format").length; i++){
+            if($(".file_format").eq(i).attr("file-data") == $(".file_format").val()){
+                $(".file_format").eq(i).show();
+            }
+        }
+
+        /**添加新的礼券**/
+        function add_coupon() {
+            var power_list = "";
+            for (var i = 0; i < $("input[name='power']:checked").length; i++){
+                power_list += $("input[name='power']:checked").eq(i).val() + ',';
+            }
+            $.ajax({
+                'type':'post',
+                'url':"{:url('home/user/add_power')}",
+                'data':{
+                    'uid' : $("input[name='uid']").val(),
+                    'power':power_list
+                },
+                'success':function (result) {
+                    if(result.code > 0){
+                        layui.use('layer', function() {
+                            var layer = layui.layer;
+                            layer.open({
+                                title: '操作结果信息'
+                                ,content: result.msg
+                                ,yes: function(layero, index){
+                                    location.href = "{:url('home/user/admin_list')}";
+                                }
+                            });
+                        });
+                    }else if(result.code == -2){
+                        location.href = result.url;
+                    }else {
+                        layui.use('layer', function() {
+                            var layer = layui.layer;
+                            layer.open({
+                                title: '操作结果信息'
+                                ,content: result.msg
+                                ,yes: function(layero, index){
+                                    location.reload();
+                                }
+                            });
+                        });
+                    }
+
+                },
+                'error':function () {
+                    console.log('error');
+                }
+            })
+        }
+
+    </script>
+    {include file="common/footer" /}
