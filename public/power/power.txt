@@ -28,3 +28,5 @@
 #xiugaibannerzhuangtai*修改导航banner状态
 #xiugainavbannerxinxi*修改导航banner信息
 #tianjianavbanner*添加导航
+#productlist*商品列表
+#prosortlist*商品分类列表
