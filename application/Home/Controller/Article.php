@@ -119,7 +119,7 @@ class Article extends Controller
      */
     public function Upload_file(){
         $route = '../public/article/';
-        $host = $_SERVER['SERVER_NAME'];
+        $host = 'http://'.$_SERVER['SERVER_NAME'];
         $file_url = upload_img('file',400000,$route,0);
         return json(['url_str' => $host.'/article/'.$file_url]);
     }

@@ -79,6 +79,7 @@ class Articlem extends Model
         ];
         $update_info = [
             'content' => trim($data['content']," "),
+            'img_url' => $data['img_url'],
         ];
         $res = Db::table('e_article')->where(['article_id' => $data['article_id']])
                ->update($update_data);
