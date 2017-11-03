@@ -1,0 +1,216 @@
+{include file="common/header" /}
+<legend id="title">导航详情</legend>
+<div style="padding: 0 10px">
+    <style>
+        .layui-upload-img {
+            width: 92px;
+            height: 92px;
+            margin: 0 10px 10px 0;
+        }
+        .file_format{
+            display: none;
+        }
+    </style>
+    <div class="layui-row">
+        <div class="layui-col-md2">
+            <div class="grid-demo grid-demo-bg1">&nbsp;</div>
+        </div>
+        <div class="layui-col-md8">
+            <div class="grid-demo">
+                <form class="layui-form layui-form-pane" id="update_nav_data" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">分类导航ID</label>
+                            <div class="layui-input-inline">
+                                <input type="text" value="{$data.nav_id}" name="nav_id" lay-verify="nav_id" autocomplete="off" placeholder="请输入礼券名称" class="layui-input" disabled>
+                            </div>
+                            <input type="hidden" value="{$data.nav_id}" name="nav_id">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">名称</label>
+                            <div class="layui-input-inline">
+                                <input type="text"  value="{$data.nav_name}" name="nav_name" lay-verify="nav_name" autocomplete="off" placeholder="名称" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">添加时间</label>
+                            <div class="layui-input-inline">
+                                <input type="text" value="{$data.add_time|date='Y-m-d H:i:s',###}" name="add_time" lay-verify="add_time" autocomplete="off" placeholder="使用规则,多少元" disabled class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">状态</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" {$data.status==1?'checked':''} name="status" lay-skin="switch" lay-filter="switchTest" title="开关">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="layui-col-md2">
+            <div class="grid-demo grid-demo-bg1">&nbsp;</div>
+        </div>
+    </div>
+
+    <script>
+        layui.use(['form', 'layedit', 'laydate','upload'], function(){
+            var $ = layui.jquery,
+                upload = layui.upload;
+            var form = layui.form
+                ,layer = layui.layer
+                ,layedit = layui.layedit
+                ,laydate = layui.laydate;
+
+            //日期
+            laydate.render({
+                elem: '#date'
+            });
+            laydate.render({
+                elem: '#date1'
+            });
+
+            //创建一个编辑器
+            var editIndex = layedit.build('LAY_demo_editor');
+
+            //自定义验证规则
+            form.verify({
+                title: function(value){
+                    if(value.length < 4){
+                        return '标题至少得5个字符啊';
+                    }
+                }
+                ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+                ,nav_sort: function (value) {
+                    if(value == 0){
+                        return "请选择分类";
+                    }
+                }
+                ,content: function(value){
+                    layedit.sync(editIndex);
+                }
+            });
+
+            //监听指定开关
+            form.on('switch(switchTest)', function(data){
+                layer.msg('开关：'+ (this.checked ? '开' : '关'), {
+                    offset: '6px'
+                });
+            });
+
+            //监听提交
+            form.on('submit(demo1)', function(data){
+                update_nav_info();
+                return false;
+            });
+
+            //多图片上传
+            upload.render({
+                elem: '#test2'
+                ,url: "{:url('home/article/upload_file')}"
+                ,multiple: true
+                ,size: 2024 //限制文件大小，单位 KB
+                ,before: function(obj){
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function(index, file, result){
+                        $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+                    });
+                }
+                ,done: function(res){
+                    //上传完毕
+                    console.log(res);
+                }
+            });
+
+            upload.render({
+                elem: '#test5'
+                ,url: "{:url('home/article/upload_file')}"
+                ,accept: 'video' //视频
+                ,size: 60 //限制文件大小，单位 KB
+                ,done: function(res){
+                    console.log(res)
+                }
+            });
+
+
+            upload.render({
+                elem: '#test6'
+                ,url: "{:url('home/article/upload_file')}"
+                ,accept: 'audio' //音频
+                ,size: 60 //限制文件大小，单位 KB
+                ,done: function(res){
+                    console.log(res)
+                }
+            });
+
+
+            form.on('select(file_format)', function(data){
+                console.log(data.value); //得到被选中的值
+                for(var i = 0; i < $(".file_format").length; i++){
+                    if($(".file_format").eq(i).attr("file-data") == data.value){
+                        $(".file_format").hide();
+                        $(".file_format").eq(i).show();
+                    }
+                }
+            });
+
+
+        });
+    </script>
+    <script>
+        /**默认选中**/
+        for(var i = 0; i < $(".file_format").length; i++){
+            if($(".file_format").eq(i).attr("file-data") == $(".file_format").val()){
+                $(".file_format").eq(i).show();
+            }
+        }
+
+        /**修改nav信息**/
+        function update_nav_info() {
+            $.ajax({
+                'type':'post',
+                'url':"{:url('home/nav/update_nav_info')}",
+                'data':$("#update_nav_data").serialize(),
+                'success':function (result) {
+                    if(result.code > 0){
+                        layui.use('layer', function() {
+                            var layer = layui.layer;
+                            layer.open({
+                                title: '操作结果信息'
+                                ,content: result.msg
+                                ,yes: function(layero, index){
+                                    location.href = "{:url('home/nav/index')}";
+                                }
+                            });
+                        });
+                    }else if(result.code == -2){
+                        location.href = result.url;
+                    }else {
+                        layui.use('layer', function() {
+                            var layer = layui.layer;
+                            layer.open({
+                                title: '操作结果信息'
+                                ,content: result.msg
+                                ,yes: function(layero, index){
+                                    location.reload();
+                                }
+                            });
+                        });
+                    }
+
+                },
+                'error':function () {
+                    console.log('error');
+                }
+            })
+        }
+
+    </script>
+    {include file="common/footer" /}

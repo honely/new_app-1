@@ -59,12 +59,27 @@ class Navsort extends Model
 
 
     /**
+     * 获取导航信息
+     * @param $nav_id 导航id
+     * @return array or null;
+     */
+    public function get_nav_info($nav_id){
+        $data = Db::table('e_nav_list')->where(['nav_id' => $nav_id])->select();
+        return $data ? $data : null;
+    }
+
+
+    /**
      * 获取导航banner
      * @param $options 分页参数
      * @return array or null;
      */
     public function get_nav_banner($options){
-        $data = Db::table('e_nav_banner')->paginate('15',false,$options);
+        $data = Db::table('e_nav_banner as nav')
+                ->join('e_nav_list as n','n.nav_id=nav.nav_id')
+                ->field('n.nav_name')
+                ->field('nav.*')
+                ->paginate('15',false,$options);
         $page = $data->render();
         return ($data || $page) ? ['data'=>$data,'page' => $page] : ['data' => '','page' => ''];
     }
@@ -109,11 +124,17 @@ class Navsort extends Model
      * @return true or false;
      */
     public function update_nav_info($data){
+        if(isset($data['status']) && $data['status'] == 'on'){
+            $status = 1;
+        }elseif(!isset($data['status'])){
+            $status = 3;
+        }
         $update_data = [
-            'nav_name' => $data['nav_name']
+            'nav_name' => $data['nav_name'],
+            'status' => $status
         ];
         $res = Db::table('e_nav_list')->where(['nav_id' => $data['nav_id']])->update($update_data);
-        return $res ? true : false;
+        return ($res || $res == 0) ? true : false;
 
     }
 
@@ -124,7 +145,12 @@ class Navsort extends Model
      * @return array or null;
      */
     public function get_nav_banner_info($nav_banner_id){
-        $data = Db::table('e_nav_banner')->where(['id' => $nav_banner_id])->select();
+        $data = Db::table('e_nav_banner as ban')
+                ->join('e_nav_list as nav',"ban.nav_id=nav.nav_id")
+                ->where(['ban.id' => $nav_banner_id])
+                ->field('ban.*')
+                ->field('nav.nav_name')
+                ->select();
         return $data ? $data : null;
     }
 
@@ -137,10 +163,11 @@ class Navsort extends Model
     public function update_banner_info($data){
         $update_data = [
             'banner_img' => $data['banner_img'],
-            'jump_url' => $data['jump_url'],
+            'Jump_url' => $data['Jump_url'],
+            'nav_id' => $data['nav_id']
         ];
         $res = Db::table('e_nav_banner')->where(['id' => $data['banner_id']])->update($update_data);
-        return $res ? true : false;
+        return ($res || $res == 0) ? true : false;
 
     }
 

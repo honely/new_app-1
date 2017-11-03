@@ -88,12 +88,15 @@ class Nav extends Controller
             $this->success('您没有权限进行该操作！','home/index/index');
         }
         $nav_model = new Navsort();
+        $id = input('nav_id');
         if(Request::instance()->post()){
             $param = Request::instance()->post();
             $update_nav = $nav_model->update_nav_info($param);
             return $update_nav ? json(['code' => 1,'msg' => '修改成功！']) : json(['code' => -1,'msg' => '修改失败！']);
         }
-        return $this->fetch('update_nav');
+        $get_nav_data = $nav_model->get_nav_info($id);
+        $this->assign('data',$get_nav_data[0]);
+        return $this->fetch('details_nav');
 
 
     }
@@ -164,8 +167,8 @@ class Nav extends Controller
             return $update_banner_info ? json(['code' => 1,'msg' => '修改成功！']) : json(['code' => -1,'msg' => '修改失败！']);
         }
         $get_nav_banner = $nav_model->get_nav_banner_info($banner_id);
-        $this->assign('banner_data',$get_nav_banner);
-        return $this->fetch('banner_details');
+        $this->assign('banner_data',$get_nav_banner[0]);
+        return $this->fetch('details_banner');
     }
 
 
@@ -190,6 +193,17 @@ class Nav extends Controller
         $this->assign('nav_data',$get_nav_list);
         return $this->fetch('add_nav_banner');
 
+    }
+
+
+    /**
+     * 图片上传、视频、音频
+     */
+    public function Upload_file(){
+        $route = '../public/nav_banner/';
+        $host = "http://".$_SERVER['SERVER_NAME'];
+        $file_url = upload_img('file',400000,$route,0);
+        return json(['url_str' => $host.'/nav_banner/'.$file_url]);
     }
 
 

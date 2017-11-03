@@ -18,15 +18,11 @@
     <table class="layui-table">
         <colgroup>
             <col width="10">
-            <col width="150">
-            <col width="100">
-            <col width="150">
             <col width="200">
             <col width="100">
-            <col width="200">
             <col width="50">
             <col width="350">
-            <col width="150">
+            <col width="250">
             <col width="250">
             <col>
         </colgroup>
@@ -36,22 +32,34 @@
                 <input type="checkbox">
             </th>
             <th>ID</th>
-            <th>名称</th>
+            <th>所属名称</th>
+            <th>banner图片</th>
+            <th>跳转地址</th>
             <th>添加时间</th>
             <th>状态</th>
             <th>操作</th>
         </tr>
         </thead>
         <tbody>
-        {volist name="nav_data" id="vo"}
+        {volist name="data" id="vo"}
         <tr>
             <td>
                 <input type="checkbox">
             </td>
-            <td>{$vo.nav_id}</td>
+            <td>{$vo.id}</td>
             <td>
                 <div class="layui-table-cell laytable-cell-1-sign">
                     {$vo.nav_name}
+                </div>
+            </td>
+            <td style="height: 50px">
+                <div class="layui-table-cell laytable-cell-1-sign" style="height: auto">
+                    <img style="height: 50px" src='{$vo.banner_img}' alt="">
+                </div>
+            </td>
+            <td>
+                <div class="layui-table-cell laytable-cell-2-sign">
+                    {$vo.Jump_url}
                 </div>
             </td>
             <td>
@@ -70,10 +78,10 @@
             </td>
             <td>
                 <div class="layui-table-cell laytable-cell-1-10">
-                    <a uid="{$vo.nav_id}" href="{:url('home/nav/update_nav_info',['nav_id' => $vo.nav_id])}" class="layui-btn layui-btn-mini" lay-event="del">
+                    <a uid="{$vo.id}" href="{:url('home/nav/update_banner_info',['banner_id' => $vo.id])}" class="layui-btn layui-btn-mini" lay-event="del">
                         编辑
                     </a>
-                    <a uid="{$vo.nav_id}" status="{$vo.status==3 ? 1 : 3}" onclick="update_nav_status(this)" href="javascript:;" class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">
+                    <a uid="{$vo.id}" status="{$vo.status==3 ? 1 : 3}" onclick="update_status(this)" href="javascript:;" class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">
                         {$vo.status==3 ? '恢复正常' : '删除'}
                     </a>
                 </div>
@@ -83,11 +91,12 @@
         </tbody>
     </table>
     <div>
+        {$page}
     </div>
     <script>
         $(".pagination .active").css('color','red');
-        /**修改导航状态操作**/
-        function update_nav_status(obj) {
+        /**修改banner状态操作**/
+        function update_status(obj) {
             var id = obj.getAttribute('uid'),status = obj.getAttribute('status');
             if(status == 3){
                 layui.use('layer', function() {
@@ -120,7 +129,7 @@
         function ajax(id,status){
             $.ajax({
                 'type':'get',
-                'url':"{:url('home/nav/update_nav_status')}",
+                'url':"{:url('home/nav/update_banner_status')}",
                 'data':{
                     'id':id,
                     'status' : status
