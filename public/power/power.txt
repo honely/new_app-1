@@ -4,6 +4,10 @@
 #shanchuzuopin*删除作品
 #xiugaizuopin*修改作品
 #tianjiaxinzuopin*添加作品
+#wenzhangpinglun*作品评论列表
+#deletezuopincomment*删除作品评论
+#productcommentlist*商品评论列表
+#xiugaiprocommentstatus*删除商品评论
 #tianjiapingtaihuiyuan*添加品台会员
 #huiyuanliebiao*会员列表
 #shanchupingtaihuiyuan*删除平台会员

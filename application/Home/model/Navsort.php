@@ -109,7 +109,7 @@ class Navsort extends Model
         $insert_data = [
             'nav_id' => $data['nav_id'],
             'banner_img' => $data['banner_img'],
-            'jump_url' => $data['jump_url'],
+            'Jump_url' => $data['Jump_url'],
             'add_time' => time(),
             'status' => 1
         ];

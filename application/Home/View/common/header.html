@@ -57,9 +57,11 @@
                     <dl class="layui-nav-child">
                         <dd><a href="{:url('home/article/index')}" data-href="">作品列表</a></dd>
                         <dd><a href="{:url('home/article/add_new_article')}">添加作品</a></dd>
+                        <dd><a href="{:url('home/comment/index')}">作品评论</a></dd>
+                        <dd><a href="{:url('home/comment/get_pro_comment')}">商品评论</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item layui-nav-itemed">
                     <a href="javascript:;">会员管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="{:url('user/get_user_list')}">会员列表</a></dd>
@@ -69,14 +71,13 @@
                         <dd><a href="{:url('user/admin_list')}">管理员列表</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item layui-nav-itemed">
                     <a href="javascript:;">导航分类管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="{:url('nav/index')}">导航分类列表</a></dd>
                         <dd><a href="{:url('nav/add_nav')}">添加分类</a></dd>
                         <dd><a href="{:url('nav/get_nav_banner')}">导航分类广告</a></dd>
-                        <dd><a href="{:url('nav/add_nav_banner')}"></a></dd>
-                        <dd><a href="javascript:;">分类广告位置</a></dd>
+                        <dd><a href="{:url('nav/add_nav_banner')}">添加导航banner</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item"><a href="">商城</a></li>
