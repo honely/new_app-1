@@ -97,6 +97,7 @@ class Articlem extends Model
         $insert_data = [
             'article_title' => $data['title'],
             'nav_id' => $data['nav_sort'],
+            'uid' => $data['uid'],
             'add_time' => time(),
             'status' => 1
         ];
