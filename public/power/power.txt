@@ -30,3 +30,6 @@
 #tianjianavbanner*添加导航
 #productlist*商品列表
 #prosortlist*商品分类列表
+#updateprosort*商品分类详情
+#addnewsort*添加商品分类
+#updatesortstatus*删除商品分类
