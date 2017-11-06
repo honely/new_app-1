@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-11-06 15:59:48
+Date: 2017-11-06 16:37:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -40,13 +40,13 @@ CREATE TABLE `e_admin_power` (
   `admin_uid` int(11) NOT NULL COMMENT '管理员id',
   `power` varchar(255) DEFAULT NULL COMMENT '权限',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of e_admin_power
 -- ----------------------------
-INSERT INTO `e_admin_power` VALUES ('1', '1', 'shouye');
-INSERT INTO `e_admin_power` VALUES ('2', '1', 'zuopinliebiao');
+INSERT INTO `e_admin_power` VALUES ('23', '1', 'deletezuopincomment');
+INSERT INTO `e_admin_power` VALUES ('22', '1', 'zuopinliebiao');
 
 -- ----------------------------
 -- Table structure for e_admin_user
