@@ -10,10 +10,43 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-11-04 17:44:31
+Date: 2017-11-06 15:59:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for e_add_user
+-- ----------------------------
+DROP TABLE IF EXISTS `e_add_user`;
+CREATE TABLE `e_add_user` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL COMMENT '会员uid',
+  `add_uid` int(11) NOT NULL COMMENT '被添加的会员uid',
+  `add_time` int(10) NOT NULL COMMENT '添加时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of e_add_user
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for e_admin_power
+-- ----------------------------
+DROP TABLE IF EXISTS `e_admin_power`;
+CREATE TABLE `e_admin_power` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `admin_uid` int(11) NOT NULL COMMENT '管理员id',
+  `power` varchar(255) DEFAULT NULL COMMENT '权限',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of e_admin_power
+-- ----------------------------
+INSERT INTO `e_admin_power` VALUES ('1', '1', 'shouye');
+INSERT INTO `e_admin_power` VALUES ('2', '1', 'zuopinliebiao');
 
 -- ----------------------------
 -- Table structure for e_admin_user
@@ -23,7 +56,6 @@ CREATE TABLE `e_admin_user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_name` varchar(255) NOT NULL COMMENT '管理员名称',
   `pass_word` varchar(255) NOT NULL COMMENT '密码',
-  `power` varchar(6535) NOT NULL COMMENT '权限',
   `add_time` int(10) NOT NULL COMMENT '添加时间',
   `status` tinyint(1) NOT NULL COMMENT '状态',
   PRIMARY KEY (`id`)
@@ -32,7 +64,7 @@ CREATE TABLE `e_admin_user` (
 -- ----------------------------
 -- Records of e_admin_user
 -- ----------------------------
-INSERT INTO `e_admin_user` VALUES ('1', 'admin', '14e1b600b1fd579f47433b88e8d85291', 'shouye,zuopinliebiao,xiugaizuopin,tianjiaxinzuopin,tianjiapingtaihuiyuan,huiyuanliebiao,xiugaidaohangxinxi', '0', '1');
+INSERT INTO `e_admin_user` VALUES ('1', 'admin', '14e1b600b1fd579f47433b88e8d85291', '0', '1');
 
 -- ----------------------------
 -- Table structure for e_article

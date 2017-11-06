@@ -114,7 +114,7 @@ function _mate_power($power_str){
     if(!login_over_time()){
         return false;
     }
-    $session_data = \think\Cache::get('admin_data')[0]['power'];
+    $session_data = \think\Cache::get('admin_power');
     if(!empty($session_data)){
         $session_data = explode(',',$session_data);
     }else{

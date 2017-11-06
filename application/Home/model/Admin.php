@@ -32,6 +32,19 @@ class Admin extends Model
 
 
     /**
+     * 获取权限
+     * @param $admin_id   管理员id
+     * @return array or  null;
+     */
+    public function get_admin_power($admin_id){
+        $data = Db::table('e_admin_power')
+                ->where(['admin_uid'=>$admin_id])
+                ->select();
+        return $data ? $data : null;
+    }
+
+
+    /**
      * 添加管理员
      * @param $user_name 用户名  $pass_word 密码
      * @return true or false;

@@ -30,7 +30,13 @@ class Login extends Controller
             }
             $admin_model = new Admin();
             $get_user_info = $admin_model->login($user_name,$pass_word);
+            $get_power = $admin_model->get_admin_power($get_user_info[0]['id']);
+            $power = "";
+            foreach ($get_power as $key => $val){
+                $power .= $val['power'].',';
+            }
             Cache::set('admin_data',$get_user_info,3600);
+            Cache::set('admin_power',$power);
             return $get_user_info ? json(['code' => 1,'msg' => '登录成功！']) : json(['code' => -1,'msg' => '登录失败！']);
         }else{
             return $this->fetch('index');
