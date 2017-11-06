@@ -113,9 +113,15 @@ class User extends Controller
         foreach ($power_list as $val){
             $power_data[] = explode('*',$val);
         }
-        $get_user_power = Db::table('e_admin_user')->where(['id' => $uid])->field('power')->field('id')->select();
-        $user_power_data = explode(',',trim($get_user_power[0]['power'],','));
-        $this->assign('uid',$get_user_power[0]['id']);
+        $get_user_power = Db::table('e_admin_power')->where(['admin_uid' => $uid])->select();
+        $user_power_data = "";
+        foreach ($get_user_power as $key => $val){
+            $user_power_data[] = $val['power'];
+        }
+        if(isset($get_user_power[0]['admin_uid'])){
+            $uid = $get_user_power[0]['admin_uid'];
+        }
+        $this->assign('uid',$uid);
         $this->assign('user_power_data',$user_power_data);
         $this->assign('power_data',$power_data);
         return $this->fetch('power_list');

@@ -88,11 +88,19 @@ class Admin extends Model
      * @return true or false;
      */
     public function add_admin_power($data){
-        $update_data = [
-            'power' => trim($data['power'],',')
-        ];
-        $res = Db::table('e_admin_user')->where(['id' => $data['uid']])->update($update_data);
-        return ($res || $res == 0) ? true : false;
+        $result = Db::table('e_admin_power')->where(['admin_uid' => $data['uid']])->delete();
+        if($result || empty($result)){
+            $power = explode(',',trim($data['power'],','));
+            $insert_data = "";
+            foreach ($power as $val){
+                $insert_data[] = ['power' => $val,'admin_uid' => $data['uid']];
+            }
+            $res = Db::table('e_admin_power')->insertAll($insert_data);
+            return ($res || $res == 0) ? true : false;
+        }else{
+            return false;
+        }
+
     }
 
 

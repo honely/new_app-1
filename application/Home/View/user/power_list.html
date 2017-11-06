@@ -165,6 +165,7 @@
                     'power':power_list
                 },
                 'success':function (result) {
+                    console.log(result);
                     if(result.code > 0){
                         layui.use('layer', function() {
                             var layer = layui.layer;
