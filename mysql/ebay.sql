@@ -10,10 +10,28 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-11-06 16:37:29
+Date: 2017-11-09 15:32:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for e_activity
+-- ----------------------------
+DROP TABLE IF EXISTS `e_activity`;
+CREATE TABLE `e_activity` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `img_url` varchar(255) NOT NULL COMMENT '活动专题图片',
+  `jump_url` varchar(255) NOT NULL COMMENT '跳转地址',
+  `pro_id` int(11) NOT NULL COMMENT '商品id',
+  `add_time` int(10) NOT NULL COMMENT '添加时间',
+  `status` tinyint(1) NOT NULL COMMENT '状态',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='活动专题表';
+
+-- ----------------------------
+-- Records of e_activity
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for e_add_user
@@ -40,13 +58,14 @@ CREATE TABLE `e_admin_power` (
   `admin_uid` int(11) NOT NULL COMMENT '管理员id',
   `power` varchar(255) DEFAULT NULL COMMENT '权限',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='权限表';
 
 -- ----------------------------
 -- Records of e_admin_power
 -- ----------------------------
-INSERT INTO `e_admin_power` VALUES ('23', '1', 'deletezuopincomment');
-INSERT INTO `e_admin_power` VALUES ('22', '1', 'zuopinliebiao');
+INSERT INTO `e_admin_power` VALUES ('26', '1', 'deletezuopincomment');
+INSERT INTO `e_admin_power` VALUES ('25', '1', 'xiugaizuopin');
+INSERT INTO `e_admin_power` VALUES ('24', '1', 'zuopinliebiao');
 
 -- ----------------------------
 -- Table structure for e_admin_user
@@ -90,7 +109,7 @@ CREATE TABLE `e_article` (
 INSERT INTO `e_article` VALUES ('1', '测试文章1', '1', '1', '0', '0', '0', '0', '1509702696', '1');
 INSERT INTO `e_article` VALUES ('5', '上传测试1', '1', '1', '0', '0', '0', '1508920150', '1509702092', '1');
 INSERT INTO `e_article` VALUES ('6', '测试标题2', '1', '1', '0', '0', '0', '1508989651', '1509702515', '1');
-INSERT INTO `e_article` VALUES ('7', 'qwertyt', '1', '0', '0', '0', '0', '1509334727', '0', '1');
+INSERT INTO `e_article` VALUES ('7', 'qwertyt', '1', '1', '0', '0', '0', '1509334727', '0', '1');
 INSERT INTO `e_article` VALUES ('8', '给V缝纫工', '1', '1', '0', '0', '0', '1509335173', '1509514373', '1');
 INSERT INTO `e_article` VALUES ('9', '文章标题', '3', '4', '0', '0', '0', '1509701379', '0', '1');
 INSERT INTO `e_article` VALUES ('10', '测试标题', '3', '4', '0', '0', '0', '1509701621', '0', '1');
@@ -215,6 +234,23 @@ CREATE TABLE `e_follow` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for e_guess_like
+-- ----------------------------
+DROP TABLE IF EXISTS `e_guess_like`;
+CREATE TABLE `e_guess_like` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `article_id` int(11) NOT NULL COMMENT '作品id',
+  `pro_id` int(11) NOT NULL COMMENT '商品id',
+  `add_time` int(11) NOT NULL COMMENT '浏览时间',
+  `uid` int(11) NOT NULL COMMENT '会员uid',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='浏览记录';
+
+-- ----------------------------
+-- Records of e_guess_like
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for e_like
 -- ----------------------------
 DROP TABLE IF EXISTS `e_like`;
@@ -224,11 +260,13 @@ CREATE TABLE `e_like` (
   `uid` int(11) NOT NULL COMMENT '点赞会员uid',
   `like_time` int(10) NOT NULL COMMENT '点赞时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章点赞表';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='文章点赞表';
 
 -- ----------------------------
 -- Records of e_like
 -- ----------------------------
+INSERT INTO `e_like` VALUES ('1', '1', '0', '0');
+INSERT INTO `e_like` VALUES ('2', '1', '0', '0');
 
 -- ----------------------------
 -- Table structure for e_micro_blog
