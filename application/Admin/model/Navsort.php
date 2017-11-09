@@ -56,7 +56,7 @@ class Navsort extends Model
                 ->join('e_user as us','ar.uid = us.uid')
                 ->where(['ar.nav_id' => $nav_id,'ar.status' => 1])
                 ->order('ar.add_time DESC')
-                ->field('ar.*,ai.content,ai.img_url,ai.music_url,ai.video_url,us.user_name')
+                ->field('ar.*,ai.content,ai.img_url,ai.music_url,ai.video_url,us.user_name,us.head_img')
                 ->limit($page*10,'10')
                 ->select();
         return $data ? $data : null;

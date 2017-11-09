@@ -18,7 +18,8 @@ class  Find extends Controller
     public function Get_nav(){
         $navsort_model = new Navsort();
         $get_nav_list = $navsort_model->get_nav_list();
-        return json(['code' => 1,'msg' => 'success','data' => $get_nav_list]);
+        return $get_nav_list ? json(['code' => 1,'msg' => 'success','data' => $get_nav_list]) :
+                               json(['code' => -1,'msg' => '数据为空！']) ;
     }
 
 
@@ -32,7 +33,8 @@ class  Find extends Controller
             return json(['code' => -2,'msg' => '导航id为空！']);
         }
         $get_banner = $nav_model->get_nav_banner($nav_id);
-        return json(['code' => 1,'msg' => 'success','data' => $get_banner]);
+        return $get_banner ? json(['code' => 1,'msg' => 'success','data' => $get_banner]) :
+                             json(['code' => -1,'msg' =>'数据为空！'])   ;
 
     }
 
@@ -48,7 +50,8 @@ class  Find extends Controller
         }
         $navsort_model = new Navsort();
         $get_article_list = $navsort_model->get_article_list($nav_id,$page);
-        return json(['code' => 1,'msg' => 'success','data' => $get_article_list]);
+        return $get_article_list ? json(['code' => 1,'msg' => 'success','data' => $get_article_list]) :
+                                   json(['code' => -1,'msg'=>'数据为空!']) ;
 
 
     }
