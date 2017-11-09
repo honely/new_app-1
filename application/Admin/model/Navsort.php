@@ -50,13 +50,14 @@ class Navsort extends Model
      * @return array or null;
      */
     public function get_article_list($nav_id,$page){
+        $page = abs($page - 1);
         $data = Db::table('e_article as ar')
                 ->join('e_article_info as ai','ai.article_id = ar.article_id')
                 ->join('e_user as us','ar.uid = us.uid')
                 ->where(['ar.nav_id' => $nav_id,'ar.status' => 1])
                 ->order('ar.add_time DESC')
                 ->field('ar.*,ai.content,ai.img_url,ai.music_url,ai.video_url,us.user_name')
-                ->limit($page,'10')
+                ->limit($page*10,'10')
                 ->select();
         return $data ? $data : null;
 
